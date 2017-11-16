@@ -26,6 +26,12 @@ public:
     explicit window(QWidget* parent = nullptr);
     ~window();
 
+signals:
+    void closing();
+
+protected:
+    virtual void closeEvent(QCloseEvent*) override;
+
 private:
     Ui::window* ui;
 };
