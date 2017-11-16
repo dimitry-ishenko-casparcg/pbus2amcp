@@ -36,6 +36,7 @@ try
     QApplication app(argc, argv);
 
     gui::window win;
+    QObject::connect(&win, &gui::window::closing, [&](){ src::quit = true; });
     win.show();
 
     using proc = std::function<void(const asio::error_code&)>;
