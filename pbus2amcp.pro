@@ -13,12 +13,9 @@ DEFINES += ASIO_STANDALONE
 
 HEADERS +=          \
     gui/window.hpp  \
-    src/asio_or_boost.hpp \
-    src/common.hpp  \
 
 SOURCES +=          \
     gui/window.cpp  \
-    src/common.cpp  \
     src/main.cpp    \
 
 FORMS +=            \
