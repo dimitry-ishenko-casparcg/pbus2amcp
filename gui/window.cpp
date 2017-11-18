@@ -24,8 +24,9 @@ window::window(QWidget* parent) : QWidget(parent),
 {
     ui->setupUi(this);
 
-    ui->caspar_scan->setEnabled(false);
-    ui->registers_group->setEnabled(false);
+    ui->casparcg_scan->setEnabled(false);
+    ui->commands->setEnabled(false);
+    ui->registers->setEnabled(false);
 
     for(int nr = nr_min; nr <= nr_max; ++nr)
         ui->registers->layout()->addWidget(new reg(nr));
@@ -35,10 +36,10 @@ window::window(QWidget* parent) : QWidget(parent),
     );
     connect(ui->serial_settings, &QPushButton::clicked, this, &window::serial_settings);
 
-    connect(ui->caspar_connect, &QPushButton::clicked,
-        [&](){ if(!connected_) caspar_connect(); else caspar_disconnect(); }
+    connect(ui->casparcg_connect, &QPushButton::clicked,
+        [&](){ if(!connected_) casparcg_connect(); else casparcg_disconnect(); }
     );
-    connect(ui->caspar_scan, &QPushButton::clicked, this, &window::caspar_scan);
+    connect(ui->casparcg_scan, &QPushButton::clicked, this, &window::casparcg_scan);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -59,7 +60,7 @@ void window::serial_open()
 {
     // open
 
-    ui->serial_open->setText("Close");
+    ui->serial_open->setText("C&lose");
     ui->serial_settings->setEnabled(false);
     open_ = true;
 }
@@ -69,7 +70,7 @@ void window::serial_close()
 {
     // close
 
-    ui->serial_open->setText("Open");
+    ui->serial_open->setText("&Open");
     ui->serial_settings->setEnabled(true);
     open_ = false;
 }
@@ -81,29 +82,29 @@ void window::serial_settings()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void window::caspar_connect()
+void window::casparcg_connect()
 {
     // connect
 
-    ui->caspar_connect->setText("Disconnect");
-    ui->caspar_scan->setEnabled(true);
-    ui->registers_group->setEnabled(true);
+    ui->casparcg_connect->setText("D&isconnect");
+    ui->casparcg_scan->setEnabled(true);
+    ui->registers->setEnabled(true);
     connected_ = true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void window::caspar_disconnect()
+void window::casparcg_disconnect()
 {
     // disconnect
 
-    ui->caspar_connect->setText("Connect");
-    ui->caspar_scan->setEnabled(false);
-    ui->registers_group->setEnabled(false);
+    ui->casparcg_connect->setText("&Connect");
+    ui->casparcg_scan->setEnabled(false);
+    ui->registers->setEnabled(false);
     connected_ = false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void window::caspar_scan()
+void window::casparcg_scan()
 {
     // scan
 }

@@ -42,9 +42,9 @@ private:
     void serial_close();
     void serial_settings();
 
-    void caspar_connect();
-    void caspar_disconnect();
-    void caspar_scan();
+    void casparcg_connect();
+    void casparcg_disconnect();
+    void casparcg_scan();
 };
 
 

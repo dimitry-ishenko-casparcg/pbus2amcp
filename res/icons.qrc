@@ -3,5 +3,7 @@
         <file>cue.svg</file>
         <file>loop.svg</file>
         <file>play.svg</file>
+        <file>recall.svg</file>
+        <file>stop.svg</file>
     </qresource>
 </RCC>

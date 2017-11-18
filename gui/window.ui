@@ -15,44 +15,103 @@
   </property>
   <layout class="QVBoxLayout" name="layout">
    <item>
-    <widget class="QGroupBox" name="device_group">
+    <widget class="QGroupBox" name="group_2">
      <property name="title">
       <string>PBus</string>
      </property>
-     <layout class="QGridLayout" name="layout_3">
-      <item row="0" column="4">
+     <layout class="QHBoxLayout" name="layout_2">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>&amp;Serial Port</string>
+        </property>
+        <property name="buddy">
+         <cstring>serial_port</cstring>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="serial_port">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>&amp;Device #</string>
+        </property>
+        <property name="buddy">
+         <cstring>pbus_device</cstring>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="pbus_device">
+        <property name="maximum">
+         <number>47</number>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="serial_open">
         <property name="text">
-         <string>Open</string>
+         <string>&amp;Open</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="0" colspan="6">
-       <widget class="QLabel" name="label_3">
+      <item>
+       <widget class="QPushButton" name="serial_settings">
         <property name="text">
-         <string>CasparCG</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <string>S&amp;ettings...</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0" colspan="6">
-       <widget class="Line" name="line">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="5">
-       <widget class="QPushButton" name="caspar_scan">
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="group">
+     <property name="title">
+      <string>CasparCG</string>
+     </property>
+     <layout class="QHBoxLayout" name="layout_3">
+      <item>
+       <widget class="QLabel" name="label_4">
         <property name="text">
-         <string>Scan</string>
+         <string>&amp;Host</string>
+        </property>
+        <property name="buddy">
+         <cstring>casparcg_host</cstring>
         </property>
        </widget>
       </item>
-      <item row="3" column="3">
-       <widget class="QSpinBox" name="caspar_port">
+      <item>
+       <widget class="QLineEdit" name="casparcg_host">
+        <property name="text">
+         <string>localhost</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>&amp;Port</string>
+        </property>
+        <property name="buddy">
+         <cstring>casparcg_port</cstring>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="casparcg_port">
         <property name="minimum">
          <number>1</number>
         </property>
@@ -64,62 +123,17 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="2">
-       <widget class="QLabel" name="label_2">
+      <item>
+       <widget class="QPushButton" name="casparcg_connect">
         <property name="text">
-         <string>Device #</string>
+         <string>&amp;Connect</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="2">
-       <widget class="QLabel" name="label_5">
+      <item>
+       <widget class="QPushButton" name="casparcg_scan">
         <property name="text">
-         <string>Port</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Host</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="4">
-       <widget class="QPushButton" name="caspar_connect">
-        <property name="text">
-         <string>Connect</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="serial_port">
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Serial Port</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="5">
-       <widget class="QPushButton" name="serial_settings">
-        <property name="text">
-         <string>Settings...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="caspar_host"/>
-      </item>
-      <item row="0" column="3">
-       <widget class="QSpinBox" name="pbus_device">
-        <property name="maximum">
-         <number>47</number>
+         <string>Sc&amp;an</string>
         </property>
        </widget>
       </item>
@@ -127,31 +141,167 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="registers_group">
-     <property name="title">
-      <string>Registers</string>
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>&amp;Registers</string>
      </property>
-     <layout class="QVBoxLayout" name="layout_4">
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="buddy">
+      <cstring>scroll</cstring>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QScrollArea" name="scroll">
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="registers">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>584</width>
+        <height>516</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="layout_5"/>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="commands">
+     <layout class="QHBoxLayout" name="layout_4">
       <item>
-       <widget class="QScrollArea" name="registers_scroll">
-        <property name="frameShape">
-         <enum>QFrame::NoFrame</enum>
+       <spacer name="spacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
-        <property name="widgetResizable">
-         <bool>true</bool>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
         </property>
-        <widget class="QWidget" name="registers">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>572</width>
-           <height>581</height>
-          </rect>
-         </property>
-         <layout class="QVBoxLayout" name="layout_2"/>
-        </widget>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QToolButton" name="recall">
+        <property name="toolTip">
+         <string>Recall</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../res/icons.qrc">
+          <normaloff>:/recall.svg</normaloff>:/recall.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+R</string>
+        </property>
        </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="cue">
+        <property name="toolTip">
+         <string>Cue</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../res/icons.qrc">
+          <normaloff>:/cue.svg</normaloff>:/cue.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+C</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="play">
+        <property name="toolTip">
+         <string>Play</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../res/icons.qrc">
+          <normaloff>:/play.svg</normaloff>:/play.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+P</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="stop">
+        <property name="toolTip">
+         <string>Stop</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../res/icons.qrc">
+          <normaloff>:/stop.svg</normaloff>:/stop.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+S</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="loop">
+        <property name="toolTip">
+         <string>Loop</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../res/icons.qrc">
+          <normaloff>:/loop.svg</normaloff>:/loop.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+L</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="spacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </widget>
@@ -163,11 +313,19 @@
   <tabstop>pbus_device</tabstop>
   <tabstop>serial_open</tabstop>
   <tabstop>serial_settings</tabstop>
-  <tabstop>caspar_host</tabstop>
-  <tabstop>caspar_port</tabstop>
-  <tabstop>caspar_connect</tabstop>
-  <tabstop>caspar_scan</tabstop>
+  <tabstop>casparcg_host</tabstop>
+  <tabstop>casparcg_port</tabstop>
+  <tabstop>casparcg_connect</tabstop>
+  <tabstop>casparcg_scan</tabstop>
+  <tabstop>scroll</tabstop>
+  <tabstop>recall</tabstop>
+  <tabstop>cue</tabstop>
+  <tabstop>play</tabstop>
+  <tabstop>stop</tabstop>
+  <tabstop>loop</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../res/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

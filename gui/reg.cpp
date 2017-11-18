@@ -19,9 +19,11 @@ reg::reg(int nr, QWidget* parent) : QWidget(parent),
     ui->setupUi(this);
     ui->nr->setText(QString::number(nr));
 
-    ui->cue->setEnabled(false);
-    ui->play->setEnabled(false);
-    ui->loop->setEnabled(false);
+    if(nr >= 1 && nr <= 9)
+    {
+        ui->nr->setBuddy(ui->path);
+        ui->nr->setText("&" + ui->nr->text());
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

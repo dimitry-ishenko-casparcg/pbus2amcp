@@ -49,43 +49,8 @@
      </property>
     </widget>
    </item>
-   <item>
-    <widget class="QToolButton" name="cue">
-     <property name="toolTip">
-      <string>Cue</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../res/icons.qrc">
-       <normaloff>:/cue.svg</normaloff>:/cue.svg</iconset>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QToolButton" name="play">
-     <property name="toolTip">
-      <string>Play</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../res/icons.qrc">
-       <normaloff>:/play.svg</normaloff>:/play.svg</iconset>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QToolButton" name="loop">
-     <property name="toolTip">
-      <string>Loop</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../res/icons.qrc">
-       <normaloff>:/loop.svg</normaloff>:/loop.svg</iconset>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
- <resources>
-  <include location="../res/icons.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
