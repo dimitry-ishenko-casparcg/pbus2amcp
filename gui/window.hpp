@@ -34,6 +34,17 @@ protected:
 
 private:
     Ui::window* ui;
+
+    bool open_ = false;
+    bool connected_ = false;
+
+    void serial_open();
+    void serial_close();
+    void serial_settings();
+
+    void caspar_connect();
+    void caspar_disconnect();
+    void caspar_scan();
 };
 
 

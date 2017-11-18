@@ -133,17 +133,25 @@
      </property>
      <layout class="QVBoxLayout" name="layout_4">
       <item>
-       <spacer name="spacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
+       <widget class="QScrollArea" name="registers_scroll">
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
+        <property name="widgetResizable">
+         <bool>true</bool>
         </property>
-       </spacer>
+        <widget class="QWidget" name="registers">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>572</width>
+           <height>581</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="layout_2"/>
+        </widget>
+       </widget>
       </item>
      </layout>
     </widget>
