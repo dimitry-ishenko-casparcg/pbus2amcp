@@ -12,11 +12,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += ASIO_STANDALONE
 
 HEADERS +=          \
+    gui/reg.hpp     \
     gui/window.hpp  \
 
 SOURCES +=          \
+    gui/reg.cpp     \
     gui/window.cpp  \
     src/main.cpp    \
 
 FORMS +=            \
+    gui/reg.ui      \
     gui/window.ui   \
+
+RESOURCES +=        \
+    res/icons.qrc   \
