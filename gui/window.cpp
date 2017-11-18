@@ -5,6 +5,7 @@
 // Distributed under the GNU GPL license. See the LICENSE.md file for details.
 
 ////////////////////////////////////////////////////////////////////////////////
+#include "reg.hpp"
 #include "ui_window.h"
 #include "window.hpp"
 
@@ -14,6 +15,9 @@
 namespace gui
 {
 
+constexpr int nr_min = 1;
+constexpr int nr_max = 56;
+
 ////////////////////////////////////////////////////////////////////////////////
 window::window(QWidget* parent) : QWidget(parent),
     ui(new Ui::window)
@@ -22,6 +26,9 @@ window::window(QWidget* parent) : QWidget(parent),
 
     ui->caspar_scan->setEnabled(false);
     ui->registers_group->setEnabled(false);
+
+    for(int nr = nr_min; nr <= nr_max; ++nr)
+        ui->registers->layout()->addWidget(new reg(nr));
 
     connect(ui->serial_open, &QPushButton::clicked,
         [&](){ if(!open_) serial_open(); else serial_close(); }
