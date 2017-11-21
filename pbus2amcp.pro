@@ -1,4 +1,4 @@
-QT += core gui widgets
+QT += core gui network widgets
 TEMPLATE = app
 CONFIG += c++14 object_parallel_to_source
 
@@ -14,10 +14,12 @@ DEFINES += ASIO_STANDALONE
 HEADERS +=          \
     gui/reg.hpp     \
     gui/window.hpp  \
+    src/casparcg.hpp\
 
 SOURCES +=          \
     gui/reg.cpp     \
     gui/window.cpp  \
+    src/casparcg.cpp\
     src/main.cpp    \
 
 FORMS +=            \
