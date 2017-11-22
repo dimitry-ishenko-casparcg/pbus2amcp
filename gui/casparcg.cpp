@@ -15,7 +15,7 @@ namespace gui
 casparcg::casparcg(QWidget* parent) : QWidget(parent)
 {
     ui_.setupUi(this);
-    set(state::closed);
+    update();
 
     connect(ui_.open, &QPushButton::clicked, [&]()
     {
@@ -23,12 +23,38 @@ casparcg::casparcg(QWidget* parent) : QWidget(parent)
         emit open(ui_.name->text(), ui_.port->value());
     });
     connect(ui_.close, &QPushButton::clicked, this, &casparcg::close);
+
+    connect(ui_.scan, &QPushButton::clicked, [&]()
+    {
+        scanning(true);
+        emit scan();
+    });
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void casparcg::set(state new_state)
 {
-    switch(new_state)
+    if(new_state != state_)
+    {
+        state_ = new_state;
+        update();
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void casparcg::scanning(bool new_value)
+{
+    if(new_value != scanning_)
+    {
+        scanning_ = new_value;
+        update();
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void casparcg::update()
+{
+    switch(state_)
     {
     case state::closed:
         ui_.name->setEnabled(true);
@@ -65,8 +91,16 @@ void casparcg::set(state new_state)
         ui_.open->hide();
         ui_.close->show();
 
-        ui_.scan->setEnabled(true);
-        ui_.scan->setText("Sc&an");
+        if(scanning_)
+        {
+            ui_.scan->setEnabled(false);
+            ui_.scan->setText("Scanning");
+        }
+        else
+        {
+            ui_.scan->setEnabled(true);
+            ui_.scan->setText("Sc&an");
+        }
         break;
     }
 }

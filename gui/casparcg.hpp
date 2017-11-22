@@ -32,17 +32,27 @@ public:
     void closed() { set(state::closed); }
     void opened() { set(state::opened); }
 
+    void scanned() { scanning(false); }
+
 signals:
     ////////////////////
     void open(const QString&, quint16);
     void close();
+
+    void scan();
 
 private:
     ////////////////////
     Ui::casparcg ui_;
 
     enum class state { closed, opening, opened };
+    state state_ = state::closed;
     void set(state);
+
+    bool scanning_ = false;
+    void scanning(bool);
+
+    void update();
 };
 
 ////////////////////////////////////////////////////////////////////////////////
