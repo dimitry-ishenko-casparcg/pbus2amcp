@@ -8,6 +8,9 @@
 #include "casparcg.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
+#define VOID(cl, fn, ...) static_cast<void(cl::*)(__VA_ARGS__)>(&cl::fn)
+
+////////////////////////////////////////////////////////////////////////////////
 namespace src
 {
 
@@ -15,17 +18,15 @@ namespace src
 casparcg::casparcg(const QString& name, quint16 port, QObject* parent) :
     QObject(parent)
 {
-    connect(&socket_, &QTcpSocket::connected, this, &casparcg::connected);
-    connect(&socket_, &QTcpSocket::disconnected, this, &casparcg::disconnected);
-    connect(&socket_, static_cast<void(QTcpSocket::*)(QTcpSocket::SocketError)>(&QTcpSocket::error),
+    connect(&socket_, &QTcpSocket::connected, this, &casparcg::opened);
+    connect(&socket_, &QTcpSocket::disconnected, this, &casparcg::closed);
+
+    connect(&socket_, VOID(QTcpSocket, error, QTcpSocket::SocketError),
         [&](){ emit failed(socket_.errorString()); }
     );
 
     socket_.connectToHost(name, port);
 }
-
-////////////////////////////////////////////////////////////////////////////////
-casparcg::~casparcg() { socket_.close(); }
 
 ////////////////////////////////////////////////////////////////////////////////
 QList<media> casparcg::scan()

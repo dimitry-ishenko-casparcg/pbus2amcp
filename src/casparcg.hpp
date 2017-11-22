@@ -35,17 +35,14 @@ class casparcg : public QObject
 public:
     ////////////////////
     casparcg(const QString& name, quint16 port, QObject* parent = nullptr);
-    ~casparcg();
-
-    bool is_connected() const { return socket_.state() == QTcpSocket::ConnectedState; }
 
     ////////////////////
     QList<media> scan();
 
 signals:
     ////////////////////
-    void connected();
-    void disconnected();
+    void opened();
+    void closed();
     void failed(const QString&);
 
 private:
