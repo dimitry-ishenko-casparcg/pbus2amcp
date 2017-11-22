@@ -10,12 +10,16 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(Qt5 COMPONENTS Core Network Gui Widgets REQUIRED)
 
 set(HEADERS
+    gui/casparcg.hpp
+    gui/pbus.hpp
     gui/reg.hpp
     gui/window.hpp
     src/casparcg.hpp
 )
 
 set(SOURCES
+    gui/casparcg.cpp
+    gui/pbus.cpp
     gui/reg.cpp
     gui/window.cpp
     src/casparcg.cpp
@@ -23,6 +27,8 @@ set(SOURCES
 )
 
 set(FORMS
+    gui/casparcg.ui
+    gui/pbus.ui
     gui/reg.ui
     gui/window.ui
 )
