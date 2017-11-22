@@ -9,12 +9,14 @@
 #define GUI_WINDOW_HPP
 
 ////////////////////////////////////////////////////////////////////////////////
+#include "ui_window.h"
 #include <QWidget>
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace gui
 {
 
+////////////////////////////////////////////////////////////////////////////////
 namespace Ui { class window; }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -23,28 +25,20 @@ class window : public QWidget
     Q_OBJECT
 
 public:
+    ////////////////////
     explicit window(QWidget* parent = nullptr);
-    ~window();
 
 signals:
+    ////////////////////
     void closing();
 
 protected:
+    ////////////////////
     virtual void closeEvent(QCloseEvent*) override;
 
 private:
-    Ui::window* ui;
-
-    bool open_ = false;
-    bool connected_ = false;
-
-    void serial_open();
-    void serial_close();
-    void serial_settings();
-
-    void casparcg_connect();
-    void casparcg_disconnect();
-    void casparcg_scan();
+    ////////////////////
+    Ui::window ui_;
 };
 
 
