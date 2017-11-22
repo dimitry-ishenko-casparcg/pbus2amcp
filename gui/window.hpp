@@ -9,7 +9,11 @@
 #define GUI_WINDOW_HPP
 
 ////////////////////////////////////////////////////////////////////////////////
+#include "gui/casparcg.hpp"
+#include "src/casparcg.hpp"
 #include "ui_window.h"
+
+#include <QScopedPointer>
 #include <QWidget>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -39,6 +43,12 @@ protected:
 private:
     ////////////////////
     Ui::window ui_;
+
+    gui::casparcg* ui_casparcg_;
+    QScopedPointer<src::casparcg> casparcg_;
+
+    void casparcg_open(const QString& name, quint16 port);
+    void casparcg_close();
 };
 
 
