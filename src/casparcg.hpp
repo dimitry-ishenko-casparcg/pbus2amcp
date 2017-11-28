@@ -9,8 +9,12 @@
 #define SRC_CASPARCG_HPP
 
 ////////////////////////////////////////////////////////////////////////////////
+#include "amcp.hpp"
+
+#include <QByteArrayList>
 #include <QList>
 #include <QObject>
+#include <QScopedPointer>
 #include <QString>
 #include <QtNetwork/QTcpSocket>
 
@@ -37,7 +41,7 @@ public:
     casparcg(const QString& name, quint16 port, QObject* parent = nullptr);
 
     ////////////////////
-    QList<media> scan();
+    void scan();
 
 signals:
     ////////////////////
@@ -45,9 +49,14 @@ signals:
     void closed();
     void failed(const QString&);
 
+    void scanned(QList<media>);
+
 private:
     ////////////////////
     QTcpSocket socket_;
+    QScopedPointer<amcp> amcp_;
+
+    void proc_scan(const QByteArrayList&);
 };
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -29,9 +29,18 @@ casparcg::casparcg(const QString& name, quint16 port, QObject* parent) :
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-QList<media> casparcg::scan()
+void casparcg::scan()
 {
-    return QList<media>();
+    amcp_.reset(new amcp(socket_, "CLS"));
+
+    connect(&*amcp_, &amcp::success, this, &casparcg::proc_scan);
+    connect(&*amcp_, &amcp::failure, this, &casparcg::failed);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void casparcg::proc_scan(const QByteArrayList& data)
+{
+    emit scanned(QList<media>());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
