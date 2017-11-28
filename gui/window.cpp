@@ -52,6 +52,9 @@ void window::casparcg_open(const QString& name, quint16 port)
         [&](const QString& error){ QMessageBox::critical(this, "CasparCG", error); }
     );
     connect(&*casparcg_, &src::casparcg::failed, ui_casparcg_, &gui::casparcg::closed);
+
+    connect(ui_casparcg_, &gui::casparcg::scan, &*casparcg_, &src::casparcg::scan);
+    connect(&*casparcg_, &src::casparcg::scanned, ui_casparcg_, &gui::casparcg::scanned);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
