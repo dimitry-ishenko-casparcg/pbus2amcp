@@ -14,6 +14,7 @@ set(HEADERS
     gui/pbus.hpp
     gui/reg.hpp
     gui/window.hpp
+    src/amcp.hpp
     src/casparcg.hpp
 )
 
@@ -22,6 +23,7 @@ set(SOURCES
     gui/pbus.cpp
     gui/reg.cpp
     gui/window.cpp
+    src/amcp.cpp
     src/casparcg.cpp
     src/main.cpp
 )
