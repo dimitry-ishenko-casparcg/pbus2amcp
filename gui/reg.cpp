@@ -6,30 +6,22 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #include "reg.hpp"
-#include "ui_reg.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace gui
 {
 
 ////////////////////////////////////////////////////////////////////////////////
-reg::reg(int nr, QWidget* parent) : QWidget(parent),
-    ui(new Ui::reg), nr_(nr)
+reg::reg(int nr, QWidget* parent) : QWidget(parent)
 {
-    ui->setupUi(this);
-    ui->nr->setText(QString::number(nr));
+    ui_.setupUi(this);
+    ui_.nr->setText(QString::number(nr));
 
     if(nr >= 1 && nr <= 9)
     {
-        ui->nr->setBuddy(ui->path);
-        ui->nr->setText("&" + ui->nr->text());
+        ui_.nr->setBuddy(ui_.path);
+        ui_.nr->setText("&" + ui_.nr->text());
     }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-reg::~reg()
-{
-    delete ui;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -9,13 +9,12 @@
 #define GUI_REG_HPP
 
 ////////////////////////////////////////////////////////////////////////////////
+#include "ui_reg.h"
 #include <QWidget>
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace gui
 {
-
-namespace Ui { class reg; }
 
 ////////////////////////////////////////////////////////////////////////////////
 class reg : public QWidget
@@ -23,15 +22,12 @@ class reg : public QWidget
     Q_OBJECT
 
 public:
+    ////////////////////
     explicit reg(int nr, QWidget* parent = nullptr);
-    ~reg();
-
-    auto nr() const noexcept { return nr_; }
 
 private:
-    Ui::reg* ui;
-
-    int nr_;
+    ////////////////////
+    Ui::reg ui_;
 };
 
 
