@@ -6,7 +6,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #include "gui/pbus.hpp"
-#include "reg.hpp"
 #include "window.hpp"
 
 #include <QCloseEvent>
@@ -16,21 +15,17 @@
 namespace gui
 {
 
-constexpr int nr_min = 1;
-constexpr int nr_max = 56;
-
 ////////////////////////////////////////////////////////////////////////////////
 window::window(QWidget* parent) : QWidget(parent)
 {
     ui_.setupUi(this);
-    ui_.layout->insertWidget(0, new gui::pbus);
+    ui_.layout->addWidget(new gui::pbus);
 
-    ui_.layout->insertWidget(1, ui_casparcg_ = new gui::casparcg);
+    ui_.layout->addWidget(ui_casparcg_ = new gui::casparcg);
     connect(ui_casparcg_, &gui::casparcg::open, this, &window::casparcg_open);
     connect(ui_casparcg_, &gui::casparcg::close, this, &window::casparcg_close);
 
-    for(int nr = nr_min; nr <= nr_max; ++nr)
-        ui_.registers->layout()->addWidget(new reg(nr));
+    ui_.layout->addWidget(ui_control_ = new gui::control);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

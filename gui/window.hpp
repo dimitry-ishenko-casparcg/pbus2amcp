@@ -11,6 +11,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include "gui/casparcg.hpp"
 #include "src/casparcg.hpp"
+#include "gui/control.hpp"
 #include "ui_window.h"
 
 #include <QScopedPointer>
@@ -43,6 +44,8 @@ private:
 
     gui::casparcg* ui_casparcg_;
     QScopedPointer<src::casparcg> casparcg_;
+
+    gui::control* ui_control_;
 
     void casparcg_open(const QString& name, quint16 port);
     void casparcg_close();
