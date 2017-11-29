@@ -18,7 +18,16 @@ control::control(QWidget* parent) : QWidget(parent)
     ui_.setupUi(this);
     closed();
 
-    for(int nr = 1; nr <= 56; ++nr) ui_.reges->layout()->addWidget(new reg(nr));
+    for(int layer = 0; layer < 100; ++layer)
+    {
+        auto widget = new reg(layer);
+        ui_.reges->layout()->addWidget(widget);
+
+        connect(widget, &reg::play  , this, &control::play  );
+        connect(widget, &reg::pause , this, &control::pause );
+        connect(widget, &reg::resume, this, &control::resume);
+        connect(widget, &reg::stop  , this, &control::stop  );
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

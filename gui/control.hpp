@@ -31,6 +31,13 @@ public:
 
     void scanned(const src::media&);
 
+signals:
+    ////////////////////
+    void   play(int layer, const QString& path, int from, int to, bool fade_in, bool fade_out, bool loop);
+    void  pause(int layer);
+    void resume(int layer);
+    void   stop(int layer, bool fade_out);
+
 private:
     ////////////////////
     Ui::control ui_;
