@@ -13,12 +13,13 @@ namespace gui
 {
 
 ////////////////////////////////////////////////////////////////////////////////
-reg::reg(int nr, QWidget* parent) : QWidget(parent)
+reg::reg(int layer, QWidget* parent) : QWidget(parent),
+    layer_(layer)
 {
     ui_.setupUi(this);
-    ui_.nr->setText(QString::number(nr));
+    ui_.nr->setText(QString::number(layer_));
 
-    if(nr >= 1 && nr <= 9)
+    if(layer_ >= 0 && layer_ <= 9)
     {
         ui_.nr->setBuddy(ui_.path);
         ui_.nr->setText("&" + ui_.nr->text());

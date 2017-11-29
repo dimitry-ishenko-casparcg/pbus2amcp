@@ -25,7 +25,7 @@ class reg : public QWidget
 
 public:
     ////////////////////
-    explicit reg(int nr, QWidget* parent = nullptr);
+    explicit reg(int layer, QWidget* parent = nullptr);
 
     ////////////////////
     void set(const src::media&);
@@ -33,6 +33,7 @@ public:
 private:
     ////////////////////
     Ui::reg ui_;
+    int layer_;
 };
 
 
