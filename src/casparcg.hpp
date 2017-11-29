@@ -9,12 +9,10 @@
 #define SRC_CASPARCG_HPP
 
 ////////////////////////////////////////////////////////////////////////////////
-#include "amcp.hpp"
 #include "media.hpp"
 
 #include <QByteArrayList>
 #include <QObject>
-#include <QScopedPointer>
 #include <QString>
 #include <QtNetwork/QTcpSocket>
 
@@ -34,6 +32,11 @@ public:
     ////////////////////
     void scan();
 
+    void   play(int layer, const QString& path, int from, int to, bool fade_in, bool fade_out, bool loop);
+    void  pause(int layer);
+    void resume(int layer);
+    void   stop(int layer, bool fade_out);
+
 signals:
     ////////////////////
     void opened();
@@ -47,9 +50,7 @@ private:
     QTcpSocket socket_;
     quint16 chan_;
 
-    QScopedPointer<amcp> amcp_;
-
-    void proc_scan(const QByteArrayList&);
+    void proc(const QByteArrayList&);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
