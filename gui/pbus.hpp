@@ -26,8 +26,8 @@ public:
     explicit pbus(QWidget* parent = nullptr);
 
     ////////////////////
-    void closed() { set(state::closed); }
     void opened() { set(state::opened); }
+    void closed() { set(state::closed); }
 
 signals:
     ////////////////////

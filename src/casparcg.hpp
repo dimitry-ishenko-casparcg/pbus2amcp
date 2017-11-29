@@ -29,7 +29,7 @@ class casparcg : public QObject
 
 public:
     ////////////////////
-    casparcg(const QString& name, quint16 port, QObject* parent = nullptr);
+    casparcg(const QString& name, quint16 port, quint16 chan, QObject* parent = nullptr);
 
     ////////////////////
     void scan();
@@ -45,6 +45,8 @@ signals:
 private:
     ////////////////////
     QTcpSocket socket_;
+    quint16 chan_;
+
     QScopedPointer<amcp> amcp_;
 
     void proc_scan(const QByteArrayList&);

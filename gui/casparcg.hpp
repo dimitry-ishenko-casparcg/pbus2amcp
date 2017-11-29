@@ -26,14 +26,14 @@ public:
     explicit casparcg(QWidget* parent = nullptr);
 
     ////////////////////
-    void closed() { set(state::closed); }
     void opened() { set(state::opened); }
+    void closed() { set(state::closed); }
 
     void scanned() { scanning(false); }
 
 signals:
     ////////////////////
-    void open(const QString&, quint16);
+    void open(const QString& name, quint16 port, quint16 chan);
     void close();
 
     void scan();

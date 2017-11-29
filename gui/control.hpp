@@ -26,8 +26,8 @@ public:
     explicit control(QWidget* parent = nullptr);
 
     ////////////////////
-    void closed();
     void opened();
+    void closed();
 
     void scanned(const src::media&);
 

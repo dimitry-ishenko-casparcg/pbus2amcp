@@ -36,9 +36,9 @@ void window::closeEvent(QCloseEvent* event)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void window::casparcg_open(const QString& name, quint16 port)
+void window::casparcg_open(const QString& name, quint16 port, quint16 chan)
 {
-    casparcg_.reset(new src::casparcg(name, port));
+    casparcg_.reset(new src::casparcg(name, port, chan));
 
     ////////////////////
     connect(&*casparcg_, &src::casparcg::opened, ui_casparcg_, &gui::casparcg::opened);

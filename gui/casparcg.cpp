@@ -20,7 +20,7 @@ casparcg::casparcg(QWidget* parent) : QWidget(parent)
     connect(ui_.open, &QPushButton::clicked, [&]()
     {
         set(state::opening);
-        emit open(ui_.name->text(), ui_.port->value());
+        emit open(ui_.name->text(), ui_.port->value(), ui_.chan->value());
     });
     connect(ui_.close, &QPushButton::clicked, this, &casparcg::close);
 
@@ -59,6 +59,7 @@ void casparcg::update()
     case state::closed:
         ui_.name->setEnabled(true);
         ui_.port->setEnabled(true);
+        ui_.chan->setEnabled(true);
 
         ui_.open->show();
         ui_.open->setEnabled(true);
@@ -67,12 +68,13 @@ void casparcg::update()
         ui_.close->hide();
 
         ui_.scan->setEnabled(false);
-        ui_.scan->setText("Sc&an");
+        ui_.scan->setText("Sca&n");
         break;
 
     case state::opening:
         ui_.name->setEnabled(false);
         ui_.port->setEnabled(false);
+        ui_.chan->setEnabled(false);
 
         ui_.open->show();
         ui_.open->setEnabled(false);
@@ -81,12 +83,13 @@ void casparcg::update()
         ui_.close->hide();
 
         ui_.scan->setEnabled(false);
-        ui_.scan->setText("Sc&an");
+        ui_.scan->setText("Sca&n");
         break;
 
     case state::opened:
         ui_.name->setEnabled(false);
         ui_.port->setEnabled(false);
+        ui_.chan->setEnabled(false);
 
         ui_.open->hide();
         ui_.close->show();
@@ -99,7 +102,7 @@ void casparcg::update()
         else
         {
             ui_.scan->setEnabled(true);
-            ui_.scan->setText("Sc&an");
+            ui_.scan->setText("Sca&n");
         }
         break;
     }

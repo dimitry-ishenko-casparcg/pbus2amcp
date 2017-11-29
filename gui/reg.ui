@@ -34,6 +34,16 @@
     </widget>
    </item>
    <item>
+    <widget class="QSpinBox" name="layer">
+     <property name="toolTip">
+      <string>Layer</string>
+     </property>
+     <property name="value">
+      <number>10</number>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QComboBox" name="path">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -47,47 +57,33 @@
     </widget>
    </item>
    <item>
-    <widget class="QSpinBox" name="channel">
+    <widget class="QSpinBox" name="from">
      <property name="toolTip">
-      <string>Channel</string>
+      <string>From</string>
      </property>
-     <property name="minimum">
-      <number>1</number>
+     <property name="maximum">
+      <number>999999</number>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QSpinBox" name="layer">
+    <widget class="QSpinBox" name="to">
      <property name="toolTip">
-      <string>Layer</string>
+      <string>To</string>
      </property>
-     <property name="value">
-      <number>10</number>
+     <property name="maximum">
+      <number>999999</number>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="loop">
-     <property name="toolTip">
-      <string>Loop</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../res/icons.qrc">
-       <normaloff>:/loop.svg</normaloff>:/loop.svg</iconset>
-     </property>
-     <property name="checkable">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="mix">
+    <widget class="QToolButton" name="mix">
      <property name="toolTip">
       <string>Mix</string>
      </property>
      <property name="icon">
       <iconset resource="../res/icons.qrc">
-       <normaloff>:/mix.svg</normaloff>:/mix.svg</iconset>
+       <normaloff>:/mix.png</normaloff>:/mix.png</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -97,8 +93,84 @@
      </property>
     </widget>
    </item>
+   <item>
+    <widget class="QToolButton" name="loop">
+     <property name="toolTip">
+      <string>Loop</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../res/icons.qrc">
+       <normaloff>:/loop.png</normaloff>:/loop.png</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolButton" name="cue">
+     <property name="toolTip">
+      <string>Cue</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../res/icons.qrc">
+       <normaloff>:/cue.png</normaloff>:/cue.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolButton" name="play">
+     <property name="toolTip">
+      <string>Play</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../res/icons.qrc">
+       <normaloff>:/play.png</normaloff>:/play.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolButton" name="stop">
+     <property name="toolTip">
+      <string>Stop</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../res/icons.qrc">
+       <normaloff>:/stop.png</normaloff>:/stop.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>layer</tabstop>
+  <tabstop>path</tabstop>
+  <tabstop>from</tabstop>
+  <tabstop>to</tabstop>
+  <tabstop>mix</tabstop>
+  <tabstop>loop</tabstop>
+  <tabstop>cue</tabstop>
+  <tabstop>play</tabstop>
+  <tabstop>stop</tabstop>
+ </tabstops>
  <resources>
   <include location="../res/icons.qrc"/>
  </resources>

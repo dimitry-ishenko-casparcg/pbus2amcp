@@ -22,8 +22,8 @@ control::control(QWidget* parent) : QWidget(parent)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void control::closed() { ui_.reges->setEnabled(false); }
 void control::opened() { ui_.reges->setEnabled(true); }
+void control::closed() { ui_.reges->setEnabled(false); }
 
 ////////////////////////////////////////////////////////////////////////////////
 void control::scanned(const src::media& media)

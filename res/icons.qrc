@@ -1,10 +1,10 @@
 <RCC>
     <qresource prefix="/">
-        <file>cue.svg</file>
-        <file>loop.svg</file>
-        <file>play.svg</file>
-        <file>recall.svg</file>
-        <file>stop.svg</file>
-        <file>mix.svg</file>
+        <file>cue.png</file>
+        <file>loop.png</file>
+        <file>mix.png</file>
+        <file>pause.png</file>
+        <file>play.png</file>
+        <file>stop.png</file>
     </qresource>
 </RCC>

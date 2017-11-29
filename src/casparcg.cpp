@@ -15,8 +15,8 @@ namespace src
 {
 
 ////////////////////////////////////////////////////////////////////////////////
-casparcg::casparcg(const QString& name, quint16 port, QObject* parent) :
-    QObject(parent)
+casparcg::casparcg(const QString& name, quint16 port, quint16 chan, QObject* parent) :
+    QObject(parent), chan_(chan)
 {
     connect(&socket_, &QTcpSocket::connected, this, &casparcg::opened);
     connect(&socket_, &QTcpSocket::disconnected, this, &casparcg::closed);
