@@ -57,6 +57,11 @@ void window::casparcg_open(const QString& name, quint16 port, quint16 chan)
     connect(&*casparcg_, &src::casparcg::closed, ui_control_, &gui::control::closed);
 
     connect(&*casparcg_, &src::casparcg::scanned, ui_control_, &gui::control::scanned);
+
+    connect(ui_control_, &control::play  , &*casparcg_, &src::casparcg::play  );
+    connect(ui_control_, &control::pause , &*casparcg_, &src::casparcg::pause );
+    connect(ui_control_, &control::resume, &*casparcg_, &src::casparcg::resume);
+    connect(ui_control_, &control::stop  , &*casparcg_, &src::casparcg::stop  );
 }
 
 ////////////////////////////////////////////////////////////////////////////////
