@@ -16,8 +16,21 @@ namespace gui
 control::control(QWidget* parent) : QWidget(parent)
 {
     ui_.setupUi(this);
+    closed();
 
     for(int nr = 1; nr <= 56; ++nr) ui_.reges->layout()->addWidget(new reg(nr));
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void control::closed() { ui_.reges->setEnabled(false); }
+void control::opened() { ui_.reges->setEnabled(true); }
+
+////////////////////////////////////////////////////////////////////////////////
+void control::scanned(const src::media& media)
+{
+    auto reges = ui_.reges->layout();
+    for(int ri = 0; ri < reges->count(); ++ri)
+        static_cast<reg*>(reges->itemAt(ri)->widget())->set(media);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
