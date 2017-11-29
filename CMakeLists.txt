@@ -11,6 +11,7 @@ find_package(Qt5 COMPONENTS Core Network Gui Widgets REQUIRED)
 
 set(HEADERS
     gui/casparcg.hpp
+    gui/control.hpp
     gui/pbus.hpp
     gui/reg.hpp
     gui/window.hpp
@@ -20,6 +21,7 @@ set(HEADERS
 
 set(SOURCES
     gui/casparcg.cpp
+    gui/control.cpp
     gui/pbus.cpp
     gui/reg.cpp
     gui/window.cpp
@@ -30,6 +32,7 @@ set(SOURCES
 
 set(FORMS
     gui/casparcg.ui
+    gui/control.ui
     gui/pbus.ui
     gui/reg.ui
     gui/window.ui
