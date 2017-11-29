@@ -24,6 +24,31 @@ reg::reg(int layer, QWidget* parent) : QWidget(parent),
         ui_.nr->setBuddy(ui_.path);
         ui_.nr->setText("&" + ui_.nr->text());
     }
+
+    connect(ui_.play, &QToolButton::clicked, [&]()
+    {
+        emit play(layer_,
+            ui_.path->currentText(),
+            ui_.from->value(),
+            ui_.to->value(),
+            ui_.fade_in->isChecked(),
+            ui_.fade_out->isChecked(),
+            ui_.loop->isChecked()
+        );
+        ui_.pause->setChecked(false);
+    });
+
+    connect(ui_.pause, &QToolButton::clicked, [&]()
+    {
+        if(ui_.pause->isChecked()) emit pause(layer_);
+        else emit resume(layer_);
+    });
+
+    connect(ui_.stop, &QToolButton::clicked, [&]()
+    {
+        emit stop(layer_, ui_.fade_out->isChecked());
+        ui_.pause->setChecked(false);
+    });
 }
 
 ////////////////////////////////////////////////////////////////////////////////
