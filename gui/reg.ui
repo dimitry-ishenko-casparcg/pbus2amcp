@@ -34,16 +34,6 @@
     </widget>
    </item>
    <item>
-    <widget class="QSpinBox" name="layer">
-     <property name="toolTip">
-      <string>Layer</string>
-     </property>
-     <property name="value">
-      <number>10</number>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QComboBox" name="path">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -77,13 +67,30 @@
     </widget>
    </item>
    <item>
-    <widget class="QToolButton" name="mix">
+    <widget class="QToolButton" name="fade_in">
      <property name="toolTip">
-      <string>Mix</string>
+      <string>Fade In</string>
      </property>
      <property name="icon">
       <iconset resource="../res/icons.qrc">
-       <normaloff>:/mix.png</normaloff>:/mix.png</iconset>
+       <normaloff>:/fade_in.png</normaloff>:/fade_in.png</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolButton" name="fade_out">
+     <property name="toolTip">
+      <string>Fade Out</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../res/icons.qrc">
+       <normaloff>:/fade_out.png</normaloff>:/fade_out.png</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -108,23 +115,6 @@
     </widget>
    </item>
    <item>
-    <widget class="QToolButton" name="cue">
-     <property name="toolTip">
-      <string>Cue</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../res/icons.qrc">
-       <normaloff>:/cue.png</normaloff>:/cue.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>16</width>
-       <height>16</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QToolButton" name="play">
      <property name="toolTip">
       <string>Play</string>
@@ -138,6 +128,26 @@
        <width>16</width>
        <height>16</height>
       </size>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolButton" name="pause">
+     <property name="toolTip">
+      <string>Pause</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../res/icons.qrc">
+       <normaloff>:/pause.png</normaloff>:/pause.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -161,14 +171,14 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>layer</tabstop>
   <tabstop>path</tabstop>
   <tabstop>from</tabstop>
   <tabstop>to</tabstop>
-  <tabstop>mix</tabstop>
+  <tabstop>fade_in</tabstop>
+  <tabstop>fade_out</tabstop>
   <tabstop>loop</tabstop>
-  <tabstop>cue</tabstop>
   <tabstop>play</tabstop>
+  <tabstop>pause</tabstop>
   <tabstop>stop</tabstop>
  </tabstops>
  <resources>
