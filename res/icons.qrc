@@ -5,5 +5,6 @@
         <file>play.svg</file>
         <file>recall.svg</file>
         <file>stop.svg</file>
+        <file>mix.svg</file>
     </qresource>
 </RCC>

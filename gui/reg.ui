@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>600</width>
     <height>40</height>
    </rect>
   </property>
@@ -31,16 +31,13 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="text">
-      <string>1</string>
-     </property>
     </widget>
    </item>
    <item>
     <widget class="QComboBox" name="path">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>20</horstretch>
+       <horstretch>15</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
@@ -49,8 +46,61 @@
      </property>
     </widget>
    </item>
+   <item>
+    <widget class="QSpinBox" name="channel">
+     <property name="toolTip">
+      <string>Channel</string>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QSpinBox" name="layer">
+     <property name="toolTip">
+      <string>Layer</string>
+     </property>
+     <property name="value">
+      <number>10</number>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="loop">
+     <property name="toolTip">
+      <string>Loop</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../res/icons.qrc">
+       <normaloff>:/loop.svg</normaloff>:/loop.svg</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="mix">
+     <property name="toolTip">
+      <string>Mix</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../res/icons.qrc">
+       <normaloff>:/mix.svg</normaloff>:/mix.svg</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../res/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>
