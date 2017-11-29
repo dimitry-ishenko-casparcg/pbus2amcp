@@ -5,50 +5,29 @@
 // Distributed under the GNU GPL license. See the LICENSE.md file for details.
 
 ////////////////////////////////////////////////////////////////////////////////
-#ifndef SRC_CASPARCG_HPP
-#define SRC_CASPARCG_HPP
+#ifndef SRC_MEDIA_HPP
+#define SRC_MEDIA_HPP
 
 ////////////////////////////////////////////////////////////////////////////////
-#include "amcp.hpp"
-#include "media.hpp"
-
-#include <QByteArrayList>
-#include <QObject>
-#include <QScopedPointer>
+#include <QList>
 #include <QString>
-#include <QtNetwork/QTcpSocket>
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace src
 {
 
 ////////////////////////////////////////////////////////////////////////////////
-class casparcg : public QObject
+enum type { audio, movie, still };
+
+////////////////////////////////////////////////////////////////////////////////
+struct medium
 {
-    Q_OBJECT
-
-public:
-    ////////////////////
-    casparcg(const QString& name, quint16 port, QObject* parent = nullptr);
-
-    ////////////////////
-    void scan();
-
-signals:
-    ////////////////////
-    void opened();
-    void closed();
-    void failed(const QString&);
-
-    void scanned(const media&);
-
-private:
-    ////////////////////
-    QTcpSocket socket_;
-    QScopedPointer<amcp> amcp_;
-
-    void proc_scan(const QByteArrayList&);
+    src::type type;
+    QString path;
 };
+
+////////////////////////////////////////////////////////////////////////////////
+using media = QList<medium>;
 
 ////////////////////////////////////////////////////////////////////////////////
 }

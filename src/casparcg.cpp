@@ -38,11 +38,11 @@ void casparcg::scan()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void casparcg::proc_scan(const QByteArrayList& raw_data)
+void casparcg::proc_scan(const QByteArrayList& data)
 {
-    QList<media> data;
+    src::media media;
 
-    for(auto read : raw_data)
+    for(auto read : data)
     {
         if(!read.size() || read[0] != '"') continue;
 
@@ -58,12 +58,12 @@ void casparcg::proc_scan(const QByteArrayList& raw_data)
         if(pos < 0) continue;
 
         auto type = read.mid(0, pos).toLower();
-             if(type == "audio") data << media { media::audio, path };
-        else if(type == "movie") data << media { media::movie, path };
-        else if(type == "still") data << media { media::still, path };
+             if(type == "audio") media << medium { audio, path };
+        else if(type == "movie") media << medium { movie, path };
+        else if(type == "still") media << medium { still, path };
     }
 
-    emit scanned(data);
+    emit scanned(media);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
