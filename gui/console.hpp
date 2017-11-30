@@ -27,13 +27,14 @@ public:
 
     ////////////////////
     void info(const QString& text) { append(text, info_); }
+    void warn(const QString& text) { append(text, warn_); }
     void crit(const QString& text) { append(text, crit_); }
 
 private:
     ////////////////////
     Ui::console ui_;
 
-    QTextCharFormat info_, crit_;
+    QTextCharFormat info_, warn_, crit_;
     void append(const QString&, const QTextCharFormat&);
 };
 

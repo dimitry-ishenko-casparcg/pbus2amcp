@@ -26,6 +26,9 @@ console::console(QWidget* parent) : QWidget(parent)
     info_ = ui_.text->currentCharFormat();
     info_.setFont(font);
 
+    warn_ = info_;
+    warn_.setForeground(Qt::darkYellow);
+
     crit_ = info_;
     crit_.setForeground(Qt::red);
 }
