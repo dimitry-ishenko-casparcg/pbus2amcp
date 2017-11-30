@@ -10,8 +10,8 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #include "gui/casparcg.hpp"
-#include "src/casparcg.hpp"
 #include "gui/control.hpp"
+#include "src/casparcg.hpp"
 #include "ui_window.h"
 
 #include <QScopedPointer>
@@ -42,10 +42,10 @@ private:
     ////////////////////
     Ui::window ui_;
 
-    gui::casparcg* ui_casparcg_;
-    QScopedPointer<src::casparcg> casparcg_;
+    gui::casparcg* casparcg_;
+    QScopedPointer<src::casparcg> server_;
 
-    gui::control* ui_control_;
+    gui::control* control_;
 
     void casparcg_open(const QString& name, quint16 port, quint16 chan);
     void casparcg_close();

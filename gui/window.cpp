@@ -21,11 +21,11 @@ window::window(QWidget* parent) : QWidget(parent)
     ui_.setupUi(this);
     ui_.layout->addWidget(new gui::pbus);
 
-    ui_.layout->addWidget(ui_casparcg_ = new gui::casparcg);
-    connect(ui_casparcg_, &gui::casparcg::open, this, &window::casparcg_open);
-    connect(ui_casparcg_, &gui::casparcg::close, this, &window::casparcg_close);
+    ui_.layout->addWidget(casparcg_ = new gui::casparcg);
+    connect(casparcg_, &gui::casparcg::open, this, &window::casparcg_open);
+    connect(casparcg_, &gui::casparcg::close, this, &window::casparcg_close);
 
-    ui_.layout->addWidget(ui_control_ = new gui::control);
+    ui_.layout->addWidget(control_ = new gui::control);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -38,34 +38,34 @@ void window::closeEvent(QCloseEvent* event)
 ////////////////////////////////////////////////////////////////////////////////
 void window::casparcg_open(const QString& name, quint16 port, quint16 chan)
 {
-    casparcg_.reset(new src::casparcg(name, port, chan));
+    server_.reset(new src::casparcg(name, port, chan));
 
     ////////////////////
-    connect(&*casparcg_, &src::casparcg::opened, ui_casparcg_, &gui::casparcg::opened);
-    connect(&*casparcg_, &src::casparcg::closed, ui_casparcg_, &gui::casparcg::closed);
+    connect(&*server_, &src::casparcg::opened, casparcg_, &gui::casparcg::opened);
+    connect(&*server_, &src::casparcg::closed, casparcg_, &gui::casparcg::closed);
 
-    connect(&*casparcg_, &src::casparcg::failed,
+    connect(&*server_, &src::casparcg::failed,
         [&](const QString& error){ QMessageBox::critical(this, "CasparCG", error); }
     );
-    connect(&*casparcg_, &src::casparcg::failed, ui_casparcg_, &gui::casparcg::closed);
+    connect(&*server_, &src::casparcg::failed, casparcg_, &gui::casparcg::closed);
 
-    connect(ui_casparcg_, &gui::casparcg::scan, &*casparcg_, &src::casparcg::scan);
-    connect(&*casparcg_, &src::casparcg::scanned, ui_casparcg_, &gui::casparcg::scanned);
+    connect(casparcg_, &gui::casparcg::scan, &*server_, &src::casparcg::scan);
+    connect(&*server_, &src::casparcg::scanned, casparcg_, &gui::casparcg::scanned);
 
     ////////////////////
-    connect(&*casparcg_, &src::casparcg::opened, ui_control_, &gui::control::opened);
-    connect(&*casparcg_, &src::casparcg::closed, ui_control_, &gui::control::closed);
+    connect(&*server_, &src::casparcg::opened, control_, &gui::control::opened);
+    connect(&*server_, &src::casparcg::closed, control_, &gui::control::closed);
 
-    connect(&*casparcg_, &src::casparcg::scanned, ui_control_, &gui::control::scanned);
+    connect(&*server_, &src::casparcg::scanned, control_, &gui::control::scanned);
 
-    connect(ui_control_, &control::play  , &*casparcg_, &src::casparcg::play  );
-    connect(ui_control_, &control::pause , &*casparcg_, &src::casparcg::pause );
-    connect(ui_control_, &control::resume, &*casparcg_, &src::casparcg::resume);
-    connect(ui_control_, &control::stop  , &*casparcg_, &src::casparcg::stop  );
+    connect(control_, &control::play  , &*server_, &src::casparcg::play  );
+    connect(control_, &control::pause , &*server_, &src::casparcg::pause );
+    connect(control_, &control::resume, &*server_, &src::casparcg::resume);
+    connect(control_, &control::stop  , &*server_, &src::casparcg::stop  );
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void window::casparcg_close() { casparcg_.reset(); }
+void window::casparcg_close() { server_.reset(); }
 
 ////////////////////////////////////////////////////////////////////////////////
 }
