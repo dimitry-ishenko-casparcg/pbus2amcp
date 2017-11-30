@@ -27,9 +27,11 @@ casparcg::casparcg(const QString& name, int port, int chan, QObject* parent) :
     connect(&socket_, &QTcpSocket::disconnected, this, &casparcg::closed);
     connect(&socket_, &QTcpSocket::disconnected, [&](){ emit info(pre("Disconnected")); });
 
-    connect(&socket_, VOID(QTcpSocket, error, QTcpSocket::SocketError),
-        [&](){ emit crit(pre(socket_.errorString())); }
-    );
+    connect(&socket_, VOID(QTcpSocket, error, QTcpSocket::SocketError), [&]()
+    {
+        emit crit(pre(socket_.errorString()));
+        emit closed();
+    });
 
     socket_.connectToHost(name, port);
 }
