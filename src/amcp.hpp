@@ -31,22 +31,26 @@ public:
 
 signals:
     ////////////////////
-    void success(QByteArrayList&);
-    void failure(const QString&);
+    void done(QByteArrayList&);
+
+    void info(const QString&);
+    void crit(const QString&);
 
 private:
     ////////////////////
     QAbstractSocket& socket_;
     QList<QMetaObject::Connection> conn_;
 
-    enum state { none, data_one, data, error_one, done } state_ = none;
+    enum class state { none, data_one, data, error_one, done } state_ = state::none;
 
     QByteArray store_;
     QByteArrayList data_;
 
     void read();
 
-    void succeed();
+    QString pre(QString message);
+
+    void quit();
     void fail(const QString&);
 };
 

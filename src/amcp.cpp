@@ -16,18 +16,22 @@ namespace src
 {
 
 ////////////////////////////////////////////////////////////////////////////////
-amcp::amcp(QAbstractSocket& socket, const QByteArray &cmd, QObject* parent) :
+amcp::amcp(QAbstractSocket& socket, const QByteArray& cmd, QObject* parent) :
     QObject(parent), socket_(socket)
 {
     conn_
     << connect(&socket_, VOID(QAbstractSocket, error, QAbstractSocket::SocketError),
-        [&](){ emit failure(socket_.errorString()); }
+        [&](){ emit crit(socket_.errorString()); }
     )
     << connect(&socket_, &QAbstractSocket::readyRead, this, &amcp::read);
 
     // delay write to make sure
     // all connections have been established
-    QTimer::singleShot(0, [=](){ socket_.write(cmd + "\r\n"); });
+    QTimer::singleShot(0, [=]()
+    {
+        emit info(pre("Sending"));
+        socket_.write(cmd + "\r\n");
+    });
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -50,7 +54,7 @@ void amcp::read()
 
                      if(code == "200") state_ = state::data;
                 else if(code == "201") state_ = state::data_one;
-                else if(code == "202") succeed();
+                else if(code == "202") quit();
                 else if(code == "400") state_ = state::error_one;
                 else if(code == "401") fail("Illegal video channel");
                 else if(code == "402") fail("Parameter missing");
@@ -68,7 +72,8 @@ void amcp::read()
 
         case state::data_one:
             data_ << store_;
-            succeed();
+            store_.clear();
+            quit();
             break;
 
         case state::data:
@@ -77,11 +82,11 @@ void amcp::read()
                 data_ << store_;
                 store_.clear();
             }
-            else succeed();
+            else quit();
             break;
 
         case state::error_one:
-            fail("Invalid command: " + store_);
+            fail("Invalid command " + store_);
             break;
 
         case state::done:
@@ -92,10 +97,23 @@ void amcp::read()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void amcp::succeed() { emit success(data_); state_ = done; }
+QString amcp::pre(QString message) { return message.prepend("Command: "); }
 
 ////////////////////////////////////////////////////////////////////////////////
-void amcp::fail(const QString& message) { emit failure(message); state_ = done; }
+void amcp::quit()
+{
+    emit info(pre("Done"));
+    emit done(data_);
+
+    state_ = state::done;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void amcp::fail(const QString& message)
+{
+    emit crit(pre(message));
+    state_ = state::done;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 }

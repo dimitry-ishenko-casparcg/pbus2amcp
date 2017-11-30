@@ -40,11 +40,12 @@ void casparcg::scan()
     emit info(pre("Scanning"));
     auto scan = new amcp(socket_, "CLS", this);
 
-    connect(scan, &amcp::success, this, &casparcg::proc_scan);
-    connect(scan, &amcp::failure, this, &casparcg::failed);
+    connect(scan, &amcp::done, this, &casparcg::proc_scan);
+    connect(scan, &amcp::info, this, &casparcg::info);
+    connect(scan, &amcp::crit, this, &casparcg::failed);
 
-    connect(scan, &amcp::success, scan, &amcp::deleteLater);
-    connect(scan, &amcp::failure, scan, &amcp::deleteLater);
+    connect(scan, &amcp::done, scan, &amcp::deleteLater);
+    connect(scan, &amcp::crit, scan, &amcp::deleteLater);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -117,10 +118,11 @@ void casparcg::exec(const QByteArray& cmd)
     emit info(pre("Executing " + cmd));
 
     auto amcp = new src::amcp(socket_, cmd, this);
-    connect(amcp, &amcp::failure, this, &casparcg::failed);
+    connect(amcp, &amcp::info, this, &casparcg::info);
+    connect(amcp, &amcp::crit, this, &casparcg::failed);
 
-    connect(amcp, &amcp::success, amcp, &amcp::deleteLater);
-    connect(amcp, &amcp::success, amcp, &amcp::deleteLater);
+    connect(amcp, &amcp::done, amcp, &amcp::deleteLater);
+    connect(amcp, &amcp::done, amcp, &amcp::deleteLater);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
