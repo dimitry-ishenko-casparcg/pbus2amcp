@@ -112,6 +112,8 @@ void amcp::quit()
 void amcp::fail(const QString& message)
 {
     emit crit(pre(message));
+    emit done(QByteArrayList());
+
     state_ = state::done;
 }
 

@@ -31,7 +31,7 @@ public:
 
 signals:
     ////////////////////
-    void done(QByteArrayList&);
+    void done(const QByteArrayList&);
 
     void info(const QString&);
     void crit(const QString&);

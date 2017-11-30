@@ -41,11 +41,10 @@ void casparcg::scan()
     auto scan = new amcp(socket_, "CLS", this);
 
     connect(scan, &amcp::done, this, &casparcg::proc_scan);
+    connect(scan, &amcp::done, scan, &amcp::deleteLater);
+
     connect(scan, &amcp::info, this, &casparcg::info);
     connect(scan, &amcp::crit, this, &casparcg::warn);
-
-    connect(scan, &amcp::done, scan, &amcp::deleteLater);
-    connect(scan, &amcp::crit, scan, &amcp::deleteLater);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -118,11 +117,10 @@ void casparcg::exec(const QByteArray& cmd)
     emit info(pre("Executing " + cmd));
 
     auto amcp = new src::amcp(socket_, cmd, this);
+    connect(amcp, &amcp::done, amcp, &amcp::deleteLater);
+
     connect(amcp, &amcp::info, this, &casparcg::info);
     connect(amcp, &amcp::crit, this, &casparcg::warn);
-
-    connect(amcp, &amcp::done, amcp, &amcp::deleteLater);
-    connect(amcp, &amcp::crit, amcp, &amcp::deleteLater);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
