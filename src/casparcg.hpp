@@ -41,6 +41,8 @@ signals:
     ////////////////////
     void opened();
     void closed();
+
+    void info(const QString&);
     void failed(const QString&);
 
     void scanned(const media&);
@@ -50,7 +52,10 @@ private:
     QTcpSocket socket_;
     quint16 chan_;
 
-    void proc(const QByteArrayList&);
+    QString pre(QString message);
+
+    void exec(const QByteArray&);
+    void proc_scan(const QByteArrayList&);
 };
 
 ////////////////////////////////////////////////////////////////////////////////

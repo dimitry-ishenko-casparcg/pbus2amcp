@@ -45,9 +45,10 @@ void window::casparcg_open(const QString& name, quint16 port, quint16 chan)
     ////////////////////
     connect(&*server_, &src::casparcg::opened, casparcg_, &gui::casparcg::opened);
     connect(&*server_, &src::casparcg::closed, casparcg_, &gui::casparcg::closed);
-
-    connect(&*server_, &src::casparcg::failed, console_, &gui::console::crit);
     connect(&*server_, &src::casparcg::failed, casparcg_, &gui::casparcg::closed);
+
+    connect(&*server_, &src::casparcg::info, console_, &gui::console::info);
+    connect(&*server_, &src::casparcg::failed, console_, &gui::console::crit);
 
     connect(casparcg_, &gui::casparcg::scan, &*server_, &src::casparcg::scan);
     connect(&*server_, &src::casparcg::scanned, casparcg_, &gui::casparcg::scanned);
@@ -55,6 +56,7 @@ void window::casparcg_open(const QString& name, quint16 port, quint16 chan)
     ////////////////////
     connect(&*server_, &src::casparcg::opened, control_, &gui::control::opened);
     connect(&*server_, &src::casparcg::closed, control_, &gui::control::closed);
+    connect(&*server_, &src::casparcg::failed, control_, &gui::control::closed);
 
     connect(&*server_, &src::casparcg::scanned, control_, &gui::control::scanned);
 
