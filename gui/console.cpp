@@ -10,7 +10,6 @@
 #include <QDateTime>
 #include <QFont>
 #include <QScrollBar>
-#include <QTextCharFormat>
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace gui
@@ -24,35 +23,20 @@ console::console(QWidget* parent) : QWidget(parent)
     QFont font("");
     font.setStyleHint(QFont::Courier);
 
-    auto format = ui_.text->currentCharFormat();
-    format.setFont(font);
-    ui_.text->setCurrentCharFormat(format);
+    info_ = ui_.text->currentCharFormat();
+    info_.setFont(font);
+
+    crit_ = info_;
+    crit_.setForeground(Qt::red);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void console::info(const QString& text)
-{
-    append(text);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-void console::crit(const QString& text)
-{
-    QTextCharFormat before = ui_.text->currentCharFormat();
-    QTextCharFormat format = before;
-    format.setForeground(Qt::red);
-
-    ui_.text->setCurrentCharFormat(format);
-    append(text);
-    ui_.text->setCurrentCharFormat(before);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-void console::append(const QString& text)
+void console::append(const QString& text, const QTextCharFormat& format)
 {
     auto bar = ui_.text->verticalScrollBar();
     bool at_max = bar->value() == bar->maximum();
 
+    ui_.text->setCurrentCharFormat(format);
     ui_.text->append(QDateTime::currentDateTime().toString("[yyyy-MM-dd hh:mm:ss] ") + text);
 
     if(at_max) bar->setValue(bar->maximum());

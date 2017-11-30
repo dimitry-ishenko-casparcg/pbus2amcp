@@ -10,6 +10,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #include "ui_console.h"
+#include <QTextCharFormat>
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace gui
@@ -25,14 +26,15 @@ public:
     explicit console(QWidget* parent = nullptr);
 
     ////////////////////
-    void info(const QString&);
-    void crit(const QString&);
+    void info(const QString& text) { append(text, info_); }
+    void crit(const QString& text) { append(text, crit_); }
 
 private:
     ////////////////////
     Ui::console ui_;
 
-    void append(const QString&);
+    QTextCharFormat info_, crit_;
+    void append(const QString&, const QTextCharFormat&);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
