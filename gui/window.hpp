@@ -49,8 +49,7 @@ private:
     gui::control* control_;
     gui::console* console_;
 
-    void casparcg_open(const QString& name, quint16 port, quint16 chan);
-    void casparcg_close();
+    void open_server(const QString& name, int port, int chan);
 };
 
 

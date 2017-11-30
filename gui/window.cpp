@@ -22,8 +22,8 @@ window::window(QWidget* parent) : QWidget(parent)
     ui_.top->layout()->addWidget(new gui::pbus);
 
     ui_.top->layout()->addWidget(casparcg_ = new gui::casparcg);
-    connect(casparcg_, &gui::casparcg::open, this, &window::casparcg_open);
-    connect(casparcg_, &gui::casparcg::close, this, &window::casparcg_close);
+    connect(casparcg_, &gui::casparcg::open, this, &window::open_server);
+    connect(casparcg_, &gui::casparcg::close, [&](){ server_.reset(); });
 
     ui_.top->layout()->addWidget(control_ = new gui::control);
 
@@ -38,7 +38,7 @@ void window::closeEvent(QCloseEvent* event)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void window::casparcg_open(const QString& name, quint16 port, quint16 chan)
+void window::open_server(const QString& name, int port, int chan)
 {
     server_.reset(new src::casparcg(name, port, chan));
 
@@ -66,9 +66,6 @@ void window::casparcg_open(const QString& name, quint16 port, quint16 chan)
     connect(control_, &control::resume, &*server_, &src::casparcg::resume);
     connect(control_, &control::stop  , &*server_, &src::casparcg::stop  );
 }
-
-////////////////////////////////////////////////////////////////////////////////
-void window::casparcg_close() { server_.reset(); }
 
 ////////////////////////////////////////////////////////////////////////////////
 }
