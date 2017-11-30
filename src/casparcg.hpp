@@ -27,7 +27,7 @@ class casparcg : public QObject
 
 public:
     ////////////////////
-    casparcg(const QString& name, quint16 port, quint16 chan, QObject* parent = nullptr);
+    casparcg(const QString& name, int port, int chan, QObject* parent = nullptr);
 
     ////////////////////
     void scan();
@@ -43,14 +43,15 @@ signals:
     void closed();
 
     void info(const QString&);
-    void failed(const QString&);
+    void warn(const QString&);
+    void crit(const QString&);
 
     void scanned(const media&);
 
 private:
     ////////////////////
     QTcpSocket socket_;
-    quint16 chan_;
+    int chan_;
 
     QString pre(QString message);
 

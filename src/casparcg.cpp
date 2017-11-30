@@ -18,7 +18,7 @@ namespace src
 {
 
 ////////////////////////////////////////////////////////////////////////////////
-casparcg::casparcg(const QString& name, quint16 port, quint16 chan, QObject* parent) :
+casparcg::casparcg(const QString& name, int port, int chan, QObject* parent) :
     QObject(parent), chan_(chan)
 {
     connect(&socket_, &QTcpSocket::connected, this, &casparcg::opened);
@@ -28,7 +28,7 @@ casparcg::casparcg(const QString& name, quint16 port, quint16 chan, QObject* par
     connect(&socket_, &QTcpSocket::disconnected, [&](){ emit info(pre("Disconnected")); });
 
     connect(&socket_, VOID(QTcpSocket, error, QTcpSocket::SocketError),
-        [&](){ emit failed(pre(socket_.errorString())); }
+        [&](){ emit crit(pre(socket_.errorString())); }
     );
 
     socket_.connectToHost(name, port);
@@ -42,7 +42,7 @@ void casparcg::scan()
 
     connect(scan, &amcp::done, this, &casparcg::proc_scan);
     connect(scan, &amcp::info, this, &casparcg::info);
-    connect(scan, &amcp::crit, this, &casparcg::failed);
+    connect(scan, &amcp::crit, this, &casparcg::warn);
 
     connect(scan, &amcp::done, scan, &amcp::deleteLater);
     connect(scan, &amcp::crit, scan, &amcp::deleteLater);
@@ -119,10 +119,10 @@ void casparcg::exec(const QByteArray& cmd)
 
     auto amcp = new src::amcp(socket_, cmd, this);
     connect(amcp, &amcp::info, this, &casparcg::info);
-    connect(amcp, &amcp::crit, this, &casparcg::failed);
+    connect(amcp, &amcp::crit, this, &casparcg::warn);
 
     connect(amcp, &amcp::done, amcp, &amcp::deleteLater);
-    connect(amcp, &amcp::done, amcp, &amcp::deleteLater);
+    connect(amcp, &amcp::crit, amcp, &amcp::deleteLater);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
