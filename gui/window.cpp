@@ -9,7 +9,6 @@
 #include "window.hpp"
 
 #include <QCloseEvent>
-#include <QMessageBox>
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace gui
@@ -19,13 +18,16 @@ namespace gui
 window::window(QWidget* parent) : QWidget(parent)
 {
     ui_.setupUi(this);
-    ui_.layout->addWidget(new gui::pbus);
 
-    ui_.layout->addWidget(casparcg_ = new gui::casparcg);
+    ui_.top->layout()->addWidget(new gui::pbus);
+
+    ui_.top->layout()->addWidget(casparcg_ = new gui::casparcg);
     connect(casparcg_, &gui::casparcg::open, this, &window::casparcg_open);
     connect(casparcg_, &gui::casparcg::close, this, &window::casparcg_close);
 
-    ui_.layout->addWidget(control_ = new gui::control);
+    ui_.top->layout()->addWidget(control_ = new gui::control);
+
+    ui_.bottom->layout()->addWidget(console_ = new gui::console);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -44,9 +46,7 @@ void window::casparcg_open(const QString& name, quint16 port, quint16 chan)
     connect(&*server_, &src::casparcg::opened, casparcg_, &gui::casparcg::opened);
     connect(&*server_, &src::casparcg::closed, casparcg_, &gui::casparcg::closed);
 
-    connect(&*server_, &src::casparcg::failed,
-        [&](const QString& error){ QMessageBox::critical(this, "CasparCG", error); }
-    );
+    connect(&*server_, &src::casparcg::failed, console_, &gui::console::crit);
     connect(&*server_, &src::casparcg::failed, casparcg_, &gui::casparcg::closed);
 
     connect(casparcg_, &gui::casparcg::scan, &*server_, &src::casparcg::scan);
