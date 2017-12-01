@@ -26,6 +26,13 @@ pbus::pbus(QWidget* parent) : QWidget(parent)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+void pbus::set(const src::ports& ports)
+{
+    ui_.port->clear();
+    for(auto const& port : ports) ui_.port->addItem(port);
+}
+
+////////////////////////////////////////////////////////////////////////////////
 void pbus::set(state new_state)
 {
     switch(new_state)

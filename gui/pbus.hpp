@@ -9,7 +9,9 @@
 #define GUI_PBUS_HPP
 
 ////////////////////////////////////////////////////////////////////////////////
+#include "src/ports.hpp"
 #include "ui_pbus.h"
+
 #include <QWidget>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -26,6 +28,8 @@ public:
     explicit pbus(QWidget* parent = nullptr);
 
     ////////////////////
+    void set(const src::ports&);
+
     void opened() { set(state::opened); }
     void closed() { set(state::closed); }
 
