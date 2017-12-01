@@ -19,6 +19,7 @@ set(HEADERS
     src/amcp.hpp
     src/casparcg.hpp
     src/media.hpp
+    src/ports.hpp
     src/serial.hpp
 )
 
@@ -32,6 +33,7 @@ set(SOURCES
     src/amcp.cpp
     src/casparcg.cpp
     src/main.cpp
+    src/ports.cpp
     src/serial.cpp
 )
 
