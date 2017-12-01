@@ -40,13 +40,12 @@ casparcg::casparcg(const QString& name, int port, int chan, QObject* parent) :
 void casparcg::scan()
 {
     emit info(pre("Scanning"));
+
     auto scan = new amcp(socket_, "CLS", this);
+    connect(scan, &amcp::done, this, &casparcg::amcp_done);
 
-    connect(scan, &amcp::done, this, &casparcg::proc_scan);
     connect(scan, &amcp::done, scan, &amcp::deleteLater);
-
-    connect(scan, &amcp::info, this, &casparcg::info);
-    connect(scan, &amcp::crit, this, &casparcg::warn);
+    connect(scan, &amcp::fail, this, &casparcg::warn);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -120,13 +119,11 @@ void casparcg::exec(const QByteArray& cmd)
 
     auto amcp = new src::amcp(socket_, cmd, this);
     connect(amcp, &amcp::done, amcp, &amcp::deleteLater);
-
-    connect(amcp, &amcp::info, this, &casparcg::info);
-    connect(amcp, &amcp::crit, this, &casparcg::warn);
+    connect(amcp, &amcp::fail, this, &casparcg::warn);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void casparcg::proc_scan(const QByteArrayList& data)
+void casparcg::amcp_done(const QByteArrayList& data)
 {
     src::media media;
 
@@ -151,6 +148,7 @@ void casparcg::proc_scan(const QByteArrayList& data)
         else if(type == "still") media << medium { still, path };
     }
 
+    ////////////////////
     emit info(pre(QString("Scanned %1 items").arg(media.size())));
     emit scanned(media);
 }

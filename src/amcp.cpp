@@ -21,17 +21,13 @@ amcp::amcp(QAbstractSocket& socket, const QByteArray& cmd, QObject* parent) :
 {
     conn_
     << connect(&socket_, VOID(QAbstractSocket, error, QAbstractSocket::SocketError),
-        [&](){ emit crit(socket_.errorString()); }
+        [&](){ emit fail(socket_.errorString()); }
     )
     << connect(&socket_, &QAbstractSocket::readyRead, this, &amcp::read);
 
     // delay write to make sure
     // all connections have been established
-    QTimer::singleShot(0, [=]()
-    {
-        emit info(pre("Sending"));
-        socket_.write(cmd + "\r\n");
-    });
+    QTimer::singleShot(0, [=](){ socket_.write(cmd + "\r\n"); });
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -54,17 +50,17 @@ void amcp::read()
 
                      if(code == "200") state_ = state::data;
                 else if(code == "201") state_ = state::data_one;
-                else if(code == "202") quit();
+                else if(code == "202") emit_done();
                 else if(code == "400") state_ = state::error_one;
-                else if(code == "401") fail("Illegal video channel");
-                else if(code == "402") fail("Parameter missing");
-                else if(code == "403") fail("Illegal parameter");
-                else if(code == "404") fail("Media file not found");
-                else if(code == "500") fail("Internal server error");
-                else if(code == "501") fail("Internal server error");
-                else if(code == "502") fail("Media file unreadable");
-                else if(code == "503") fail("Access error");
-                else fail("Invalid response: " + store_);
+                else if(code == "401") emit_fail("Illegal video channel");
+                else if(code == "402") emit_fail("Parameter missing");
+                else if(code == "403") emit_fail("Illegal parameter");
+                else if(code == "404") emit_fail("Media file not found");
+                else if(code == "500") emit_fail("Internal server error");
+                else if(code == "501") emit_fail("Internal server error");
+                else if(code == "502") emit_fail("Media file unreadable");
+                else if(code == "503") emit_fail("Access error");
+                else emit_fail("Invalid response: " + store_);
 
                 store_.clear();
             }
@@ -73,7 +69,7 @@ void amcp::read()
         case state::data_one:
             data_ << store_;
             store_.clear();
-            quit();
+            emit_done();
             break;
 
         case state::data:
@@ -82,11 +78,11 @@ void amcp::read()
                 data_ << store_;
                 store_.clear();
             }
-            else quit();
+            else emit_done();
             break;
 
         case state::error_one:
-            fail("Invalid command " + store_);
+            emit_fail("Invalid command: " + store_);
             break;
 
         case state::done:
@@ -97,23 +93,18 @@ void amcp::read()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-QString amcp::pre(QString message) { return message.prepend("Command: "); }
-
-////////////////////////////////////////////////////////////////////////////////
-void amcp::quit()
+void amcp::emit_done()
 {
-    emit info(pre("Done"));
     emit done(data_);
-
     state_ = state::done;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void amcp::fail(const QString& message)
+void amcp::emit_fail(const QString& message)
 {
-    emit crit(pre(message));
-    emit done(QByteArrayList());
+    emit fail(message);
 
+    emit done(QByteArrayList());
     state_ = state::done;
 }
 

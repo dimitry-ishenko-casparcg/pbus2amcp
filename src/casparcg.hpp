@@ -56,7 +56,7 @@ private:
     QString pre(QString message);
 
     void exec(const QByteArray&);
-    void proc_scan(const QByteArrayList&);
+    void amcp_done(const QByteArrayList&);
 };
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -32,9 +32,7 @@ public:
 signals:
     ////////////////////
     void done(const QByteArrayList&);
-
-    void info(const QString&);
-    void crit(const QString&);
+    void fail(const QString&);
 
 private:
     ////////////////////
@@ -48,10 +46,8 @@ private:
 
     void read();
 
-    QString pre(QString message);
-
-    void quit();
-    void fail(const QString&);
+    void emit_done();
+    void emit_fail(const QString&);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
