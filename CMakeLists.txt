@@ -13,12 +13,12 @@ set(HEADERS
     gui/casparcg.hpp
     gui/console.hpp
     gui/control.hpp
-    gui/media.hpp
     gui/pbus.hpp
     gui/reg.hpp
     gui/window.hpp
     src/amcp.hpp
     src/casparcg.hpp
+    src/media.hpp
 )
 
 set(SOURCES
