@@ -44,7 +44,7 @@ signals:
 
     void info(const QString&);
     void warn(const QString&);
-    void crit(const QString&);
+    void fail(const QString&);
 
     void scanned(const media&);
 
@@ -52,8 +52,6 @@ private:
     ////////////////////
     QTcpSocket socket_;
     int chan_;
-
-    QString pre(QString message);
 
     void exec(const QByteArray&);
     void amcp_done(const QByteArrayList&);

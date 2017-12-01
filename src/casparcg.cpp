@@ -22,14 +22,14 @@ casparcg::casparcg(const QString& name, int port, int chan, QObject* parent) :
     QObject(parent), chan_(chan)
 {
     connect(&socket_, &QTcpSocket::connected, this, &casparcg::opened);
-    connect(&socket_, &QTcpSocket::connected, [&](){ emit info(pre("Connected")); });
+    connect(&socket_, &QTcpSocket::connected, [&](){ emit info("CasparCG: Connected"); });
 
     connect(&socket_, &QTcpSocket::disconnected, this, &casparcg::closed);
-    connect(&socket_, &QTcpSocket::disconnected, [&](){ emit info(pre("Disconnected")); });
+    connect(&socket_, &QTcpSocket::disconnected, [&](){ emit info("CasparCG: Disconnected"); });
 
     connect(&socket_, VOID(QTcpSocket, error, QTcpSocket::SocketError), [&]()
     {
-        emit crit(pre(socket_.errorString()));
+        emit fail("CasparCG: " + socket_.errorString());
         emit closed();
     });
 
@@ -39,7 +39,7 @@ casparcg::casparcg(const QString& name, int port, int chan, QObject* parent) :
 ////////////////////////////////////////////////////////////////////////////////
 void casparcg::scan()
 {
-    emit info(pre("Scanning"));
+    emit info("CasparCG: Scanning");
 
     auto scan = new amcp(socket_, "CLS", this);
     connect(scan, &amcp::done, this, &casparcg::amcp_done);
@@ -110,12 +110,9 @@ void casparcg::stop(int layer, bool fade_out)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-QString casparcg::pre(QString message) { return message.prepend("CasparCG: "); }
-
-////////////////////////////////////////////////////////////////////////////////
 void casparcg::exec(const QByteArray& cmd)
 {
-    emit info(pre("Executing " + cmd));
+    emit info("CasparCG: Executing " + cmd);
 
     auto amcp = new src::amcp(socket_, cmd, this);
     connect(amcp, &amcp::done, amcp, &amcp::deleteLater);
@@ -149,7 +146,7 @@ void casparcg::amcp_done(const QByteArrayList& data)
     }
 
     ////////////////////
-    emit info(pre(QString("Scanned %1 items").arg(media.size())));
+    emit info(QString("CasparCG: Discovered %1 items").arg(media.size()));
     emit scanned(media);
 }
 
