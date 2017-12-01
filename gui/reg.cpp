@@ -13,13 +13,12 @@ namespace gui
 {
 
 ////////////////////////////////////////////////////////////////////////////////
-reg::reg(int layer, QWidget* parent) : QWidget(parent),
-    layer_(layer)
+reg::reg(int n, QWidget* parent) : QWidget(parent), nr_(n)
 {
     ui_.setupUi(this);
-    ui_.nr->setText(QString::number(layer_));
+    ui_.nr->setText(QString::number(nr_));
 
-    if(layer_ >= 0 && layer_ <= 9)
+    if(nr_ >= 0 && nr_ <= 9)
     {
         ui_.nr->setBuddy(ui_.path);
         ui_.nr->setText("&" + ui_.nr->text());
@@ -27,7 +26,7 @@ reg::reg(int layer, QWidget* parent) : QWidget(parent),
 
     connect(ui_.play, &QToolButton::clicked, [&]()
     {
-        emit play(layer_,
+        emit play(nr_,
             ui_.path->currentText(),
             ui_.from->value(),
             ui_.to->value(),
@@ -40,13 +39,13 @@ reg::reg(int layer, QWidget* parent) : QWidget(parent),
 
     connect(ui_.pause, &QToolButton::clicked, [&]()
     {
-        if(ui_.pause->isChecked()) emit pause(layer_);
-        else emit resume(layer_);
+        if(ui_.pause->isChecked()) emit pause(nr_);
+        else emit resume(nr_);
     });
 
     connect(ui_.stop, &QToolButton::clicked, [&]()
     {
-        emit stop(layer_, ui_.fade_out->isChecked());
+        emit stop(nr_, ui_.fade_out->isChecked());
         ui_.pause->setChecked(false);
     });
 }

@@ -33,10 +33,10 @@ public:
 
 signals:
     ////////////////////
-    void   play(int layer, const QString& path, int from, int to, bool fade_in, bool fade_out, bool loop);
-    void  pause(int layer);
-    void resume(int layer);
-    void   stop(int layer, bool fade_out);
+    void   play(int n, const QString& path, int from, int to, bool fade_in, bool fade_out, bool loop);
+    void  pause(int n);
+    void resume(int n);
+    void   stop(int n, bool fade_out);
 
 private:
     ////////////////////

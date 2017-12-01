@@ -18,9 +18,9 @@ control::control(QWidget* parent) : QWidget(parent)
     ui_.setupUi(this);
     closed();
 
-    for(int layer = 0; layer < 100; ++layer)
+    for(int n = 0; n < 100; ++n)
     {
-        auto widget = new reg(layer);
+        auto widget = new reg(n);
         ui_.reges->layout()->addWidget(widget);
 
         connect(widget, &reg::play  , this, &control::play  );
@@ -38,8 +38,8 @@ void control::closed() { ui_.reges->setEnabled(false); }
 void control::scanned(const src::media& media)
 {
     auto reges = ui_.reges->layout();
-    for(int ri = 0; ri < reges->count(); ++ri)
-        static_cast<reg*>(reges->itemAt(ri)->widget())->set(media);
+    for(int n = 0; n < reges->count(); ++n)
+        static_cast<reg*>(reges->itemAt(n)->widget())->set(media);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

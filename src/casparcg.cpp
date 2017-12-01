@@ -42,71 +42,34 @@ void casparcg::scan()
     emit info("CasparCG: Scanning");
 
     auto scan = new amcp(socket_, "CLS", this);
-    connect(scan, &amcp::done, this, &casparcg::amcp_done);
+    connect(scan, &amcp::done, this, &casparcg::scan_done);
 
     connect(scan, &amcp::done, scan, &amcp::deleteLater);
     connect(scan, &amcp::fail, this, &casparcg::warn);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void casparcg::play(int layer, const QString& path, int from, int to, bool fade_in, bool fade_out, bool loop)
+void casparcg::play(int n, const QString& path, int from, int to, bool fade_in, bool fade_out, bool loop)
 {
-    QByteArray play;
-    QTextStream stream(&play);
-
-    stream << "PLAY " << chan_ << "-" << layer << " \"" << path << "\"";
-    if(loop) stream << " LOOP";
-    if(fade_in) stream << " MIX 15";
-    if(from > 0) stream << " SEEK " << from;
-    if(to > from) stream << " LENGTH " << (to - from);
-
-    stream.flush();
+    QByteArray play = "PLAY " + chan(n) + " \"" + path.toLatin1() + "\"";
+    if(loop)      play += " LOOP";
+    if(fade_in)   play += " MIX 15";
+    if(from > 0)  play += " SEEK " + nr(from);
+    if(to > from) play += " LENGTH " + nr(to - from);
     exec(play);
 
-    if(fade_out)
-    {
-        play.clear();
-        QTextStream stream(&play);
-        stream << "LOADBG " << chan_ << "-" << layer << " EMPTY MIX 15 AUTO";
-
-        stream.flush();
-        exec(play);
-    }
+    if(fade_out) exec("LOADBG " + chan(n) + " EMPTY MIX 15 AUTO");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void casparcg::pause(int layer)
-{
-    QByteArray pause;
-    QTextStream stream(&pause);
-    stream << "PAUSE " << chan_ << "-" << layer;
-
-    stream.flush();
-    exec(pause);
-}
+void casparcg::pause(int n) { exec("PAUSE " + chan(n)); }
+void casparcg::resume(int n) { exec("RESUME " + chan(n)); }
 
 ////////////////////////////////////////////////////////////////////////////////
-void casparcg::resume(int layer)
+void casparcg::stop(int n, bool fade_out)
 {
-    QByteArray resume;
-    QTextStream stream(&resume);
-    stream << "RESUME " << chan_ << "-" << layer;
-
-    stream.flush();
-    exec(resume);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-void casparcg::stop(int layer, bool fade_out)
-{
-    QByteArray stop;
-    QTextStream stream(&stop);
-
-    if(fade_out) stream << "PLAY " << chan_ << "-" << layer << " EMPTY MIX 15";
-    else stream << "STOP " << chan_ << "-" << layer;
-
-    stream.flush();
-    exec(stop);
+    if(fade_out) exec("PLAY " + chan(n) + " EMPTY MIX 15");
+    else exec("STOP " + chan(n));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -120,7 +83,7 @@ void casparcg::exec(const QByteArray& cmd)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void casparcg::amcp_done(const QByteArrayList& data)
+void casparcg::scan_done(const QByteArrayList& data)
 {
     src::media media;
 

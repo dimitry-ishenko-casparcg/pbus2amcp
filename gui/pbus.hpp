@@ -31,7 +31,7 @@ public:
 
 signals:
     ////////////////////
-    void open(const QString&, quint16);
+    void open(const QString&, int);
     void close();
 
 private:

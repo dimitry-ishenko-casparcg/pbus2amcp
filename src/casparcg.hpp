@@ -32,10 +32,10 @@ public:
     ////////////////////
     void scan();
 
-    void   play(int layer, const QString& path, int from, int to, bool fade_in, bool fade_out, bool loop);
-    void  pause(int layer);
-    void resume(int layer);
-    void   stop(int layer, bool fade_out);
+    void   play(int n, const QString& path, int from, int to, bool fade_in, bool fade_out, bool loop);
+    void  pause(int n);
+    void resume(int n);
+    void   stop(int n, bool fade_out);
 
 signals:
     ////////////////////
@@ -53,8 +53,11 @@ private:
     QTcpSocket socket_;
     int chan_;
 
+    inline auto nr(int n) { return QByteArray::number(n); }
+    inline auto chan(int n) { return nr(chan_) + '-' + nr(n); }
+
     void exec(const QByteArray&);
-    void amcp_done(const QByteArrayList&);
+    void scan_done(const QByteArrayList&);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
