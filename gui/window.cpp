@@ -5,7 +5,7 @@
 // Distributed under the GNU GPL license. See the LICENSE.md file for details.
 
 ////////////////////////////////////////////////////////////////////////////////
-#include "gui/pbus.hpp"
+#include "src/ports.hpp"
 #include "window.hpp"
 
 #include <QCloseEvent>
@@ -19,7 +19,8 @@ window::window(QWidget* parent) : QWidget(parent)
 {
     ui_.setupUi(this);
 
-    ui_.top->layout()->addWidget(new gui::pbus);
+    ui_.top->layout()->addWidget(pbus_ = new gui::pbus);
+    pbus_->set(src::avail_ports());
 
     ui_.top->layout()->addWidget(casparcg_ = new gui::casparcg);
     connect(casparcg_, &gui::casparcg::open, this, &window::open_server);

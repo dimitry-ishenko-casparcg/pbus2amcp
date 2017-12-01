@@ -12,6 +12,7 @@
 #include "gui/casparcg.hpp"
 #include "gui/console.hpp"
 #include "gui/control.hpp"
+#include "gui/pbus.hpp"
 #include "src/casparcg.hpp"
 #include "ui_window.h"
 
@@ -42,6 +43,8 @@ protected:
 private:
     ////////////////////
     Ui::window ui_;
+
+    gui::pbus* pbus_;
 
     gui::casparcg* casparcg_;
     QScopedPointer<src::casparcg> server_;
