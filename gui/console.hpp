@@ -26,15 +26,15 @@ public:
     explicit console(QWidget* parent = nullptr);
 
     ////////////////////
-    void info(const QString& text) { append(text, info_); }
-    void warn(const QString& text) { append(text, warn_); }
-    void crit(const QString& text) { append(text, crit_); }
+    void info(const QString& s) { append(s, info_); }
+    void warn(const QString& s) { append(s, warn_); }
+    void fail(const QString& s) { append(s, fail_); }
 
 private:
     ////////////////////
     Ui::console ui_;
 
-    QTextCharFormat info_, warn_, crit_;
+    QTextCharFormat info_, warn_, fail_;
     void append(const QString&, const QTextCharFormat&);
 };
 

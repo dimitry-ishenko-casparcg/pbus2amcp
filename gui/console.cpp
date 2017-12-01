@@ -29,18 +29,18 @@ console::console(QWidget* parent) : QWidget(parent)
     warn_ = info_;
     warn_.setForeground(Qt::darkYellow);
 
-    crit_ = info_;
-    crit_.setForeground(Qt::red);
+    fail_ = info_;
+    fail_.setForeground(Qt::red);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void console::append(const QString& text, const QTextCharFormat& format)
+void console::append(const QString& s, const QTextCharFormat& format)
 {
     auto bar = ui_.text->verticalScrollBar();
     bool at_max = bar->value() == bar->maximum();
 
     ui_.text->setCurrentCharFormat(format);
-    ui_.text->append(QDateTime::currentDateTime().toString("[yyyy-MM-dd hh:mm:ss] ") + text);
+    ui_.text->append(QDateTime::currentDateTime().toString("[yyyy-MM-dd hh:mm:ss] ") + s);
 
     if(at_max) bar->setValue(bar->maximum());
 }

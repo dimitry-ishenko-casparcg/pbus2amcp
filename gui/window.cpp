@@ -63,7 +63,7 @@ void window::open_server(const QString& name, int port, int chan)
     ////////////////////
     connect(&*server_, &src::casparcg::info, console_, &gui::console::info);
     connect(&*server_, &src::casparcg::warn, console_, &gui::console::warn);
-    connect(&*server_, &src::casparcg::fail, console_, &gui::console::crit);
+    connect(&*server_, &src::casparcg::fail, console_, &gui::console::fail);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
