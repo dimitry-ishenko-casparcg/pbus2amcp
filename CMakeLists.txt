@@ -19,8 +19,8 @@ set(HEADERS
     src/amcp.hpp
     src/casparcg.hpp
     src/media.hpp
+    src/pbus.hpp
     src/ports.hpp
-    src/serial.hpp
 )
 
 set(SOURCES
@@ -33,8 +33,8 @@ set(SOURCES
     src/amcp.cpp
     src/casparcg.cpp
     src/main.cpp
+    src/pbus.cpp
     src/ports.cpp
-    src/serial.cpp
 )
 
 set(FORMS
