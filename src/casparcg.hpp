@@ -37,6 +37,8 @@ public:
     void resume(int n);
     void   stop(int n, bool fade_out);
 
+    void clear();
+
 signals:
     ////////////////////
     void opened();
