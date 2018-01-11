@@ -20,7 +20,7 @@ console::console(QWidget* parent) : QWidget(parent)
 {
     ui_.setupUi(this);
 
-    QFont font("");
+    QFont font("Courier 10 Pitch");
     font.setStyleHint(QFont::Courier);
 
     info_ = ui_.text->currentCharFormat();
