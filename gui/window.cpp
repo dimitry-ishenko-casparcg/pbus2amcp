@@ -21,6 +21,8 @@ window::window(QWidget* parent) : QWidget(parent)
 
     ui_.top->layout()->addWidget(pbus_ = new gui::pbus);
     pbus_->set(src::avail_ports());
+    connect(pbus_, &gui::pbus::open, this, &window::open_device);
+    connect(pbus_, &gui::pbus::close, [&](){ device_.reset(); });
 
     ui_.top->layout()->addWidget(casparcg_ = new gui::casparcg);
     connect(casparcg_, &gui::casparcg::open, this, &window::open_server);
@@ -36,6 +38,23 @@ void window::closeEvent(QCloseEvent* event)
 {
     emit closing();
     QWidget::closeEvent(event);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void window::open_device(const QString& name, int device)
+{
+    device_.reset(new src::pbus(name, device));
+
+    ////////////////////
+    connect(&*device_, &src::pbus::opened, pbus_, &gui::pbus::opened);
+    connect(&*device_, &src::pbus::closed, pbus_, &gui::pbus::closed);
+
+    connect(&*device_, &src::pbus::exec, control_, &gui::control::exec);
+
+    ////////////////////
+    connect(&*device_, &src::pbus::info, console_, &gui::console::info);
+    connect(&*device_, &src::pbus::warn, console_, &gui::console::warn);
+    connect(&*device_, &src::pbus::fail, console_, &gui::console::fail);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

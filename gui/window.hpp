@@ -14,6 +14,7 @@
 #include "gui/control.hpp"
 #include "gui/pbus.hpp"
 #include "src/casparcg.hpp"
+#include "src/pbus.hpp"
 #include "ui_window.h"
 
 #include <QScopedPointer>
@@ -45,6 +46,7 @@ private:
     Ui::window ui_;
 
     gui::pbus* pbus_;
+    QScopedPointer<src::pbus> device_;
 
     gui::casparcg* casparcg_;
     QScopedPointer<src::casparcg> server_;
@@ -52,6 +54,7 @@ private:
     gui::control* control_;
     gui::console* console_;
 
+    void open_device(const QString& name, int device);
     void open_server(const QString& name, int port, int chan);
 };
 
