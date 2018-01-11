@@ -44,40 +44,37 @@ pbus::pbus(const QString& name, int device, QObject* parent) :
 ////////////////////////////////////////////////////////////////////////////////
 void pbus::read()
 {
-    for(;;)
+    store_.append(port_.readAll());
+
+    for(auto p = store_.indexOf('\r'); p >= 0; p = store_.indexOf('\r'))
     {
-        auto read = port_.readLine();
-        if(!read.size()) break;
+        auto cmd = store_.mid(0, p);
+        store_.remove(0, p + 1);
 
-        store_ += std::move(read);
-        if(!store_.endsWith("\r")) continue;
-
-        store_.chop(1);
         bool valid = false;
-        if(store_.size() < 7) emit warn("PBus: Invalid command " + store_);
+        if(cmd.size() < 7) emit warn("PBus: Invalid command " + cmd);
         else
         {
-            auto devices = store_.mid(1, 6).toInt(&valid, 16);
-            if(!valid) emit warn("PBus: Invalid device " + store_);
+            auto devices = cmd.mid(1, 6).toInt(&valid, 16);
+            if(!valid) emit warn("PBus: Invalid device " + cmd);
             else
             {
-                if(!(devices & device_)) emit info("PBus: Ignoring command " + store_);
+                if(!(devices & device_)) emit info("PBus: Ignoring command " + cmd);
                 else
                 {
-                    auto hex = store_.mid(7);
-                    auto arg = hex.toInt(&valid, 16);
-                    if(!valid) emit warn("PBus: Invalid arg " + store_);
+                    auto value = cmd.mid(7).toInt(&valid, 16);
+                    if(!valid) emit warn("PBus: Invalid value " + cmd);
                     else
                     {
-                        if(store_[0] == 'R')
+                        if(cmd[0] == 'R')
                         {
-                            emit info("PBus: Recall register " + hex.toLower());
-                            reg_ = arg;
+                            emit info("PBus: Recall register " + QString::number(value));
+                            reg_ = value;
                         }
-                        else if(store_[0] == 'T')
+                        else if(cmd[0] == 'T')
                         {
-                            if(reg_ < 0) emit warn("PBus: Invalid register");
-                            else switch(static_cast<trigger>(arg))
+                            if(reg_ < 0) emit warn("PBus: Register not set");
+                            else switch(static_cast<trigger>(value))
                             {
                             case trigger::play:
                                 emit info("PBus: Trigger play");
@@ -99,16 +96,14 @@ void pbus::read()
                                 emit exec(reg_, trigger::stop);
                                 break;
 
-                            default: emit warn("PBus: Invalid trigger " + store_);
+                            default: emit warn("PBus: Invalid trigger " + cmd);
                             }
                         }
-                        else emit warn("PBus: Unsupported command " + store_);
+                        else emit warn("PBus: Invalid command " + cmd);
                     }
                 }
             }
         }
-
-        store_.clear();
     }
 }
 
