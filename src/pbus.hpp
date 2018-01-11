@@ -9,6 +9,7 @@
 #define SRC_PBUS_HPP
 
 ////////////////////////////////////////////////////////////////////////////////
+#include <QByteArray>
 #include <QObject>
 #include <QtSerialPort/QSerialPort>
 
@@ -24,6 +25,30 @@ class pbus : public QObject
 public:
     ////////////////////
     explicit pbus(const QString&, int device, QObject* parent = nullptr);
+
+signals:
+    ////////////////////
+    void opened();
+    void closed();
+
+    void   play(int n);
+    void  pause(int n);
+    void resume(int n);
+    void   stop(int n);
+
+    void info(const QString&);
+    void warn(const QString&);
+    void fail(const QString&);
+
+private:
+    ////////////////////
+    QSerialPort port_;
+
+    int device_;
+    int reg_ = -1;
+
+    QByteArray store_;
+    void read();
 };
 
 ////////////////////////////////////////////////////////////////////////////////
