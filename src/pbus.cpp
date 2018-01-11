@@ -77,26 +77,26 @@ void pbus::read()
                         else if(store_[0] == 'T')
                         {
                             if(reg_ < 0) emit warn("PBus: Invalid register");
-                            else switch(arg)
+                            else switch(static_cast<trigger>(arg))
                             {
-                            case 0:
+                            case trigger::play:
                                 emit info("PBus: Trigger play");
-                                emit play(reg_);
+                                emit exec(reg_, trigger::play);
                                 break;
 
-                            case 1:
+                            case trigger::pause:
                                 emit info("PBus: Trigger pause");
-                                emit pause(reg_);
+                                emit exec(reg_, trigger::pause);
                                 break;
 
-                            case 2:
+                            case trigger::resume:
                                 emit info("PBus: Trigger resume");
-                                emit resume(reg_);
+                                emit exec(reg_, trigger::resume);
                                 break;
 
-                            case 3:
+                            case trigger::stop:
                                 emit info("PBus: Trigger stop");
-                                emit stop(reg_);
+                                emit exec(reg_, trigger::stop);
                                 break;
 
                             default: emit warn("PBus: Invalid trigger " + store_);

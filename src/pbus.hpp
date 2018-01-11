@@ -9,6 +9,8 @@
 #define SRC_PBUS_HPP
 
 ////////////////////////////////////////////////////////////////////////////////
+#include "trigger.hpp"
+
 #include <QByteArray>
 #include <QObject>
 #include <QtSerialPort/QSerialPort>
@@ -31,10 +33,7 @@ signals:
     void opened();
     void closed();
 
-    void   play(int n);
-    void  pause(int n);
-    void resume(int n);
-    void   stop(int n);
+    void exec(int n, trigger);
 
     void info(const QString&);
     void warn(const QString&);
