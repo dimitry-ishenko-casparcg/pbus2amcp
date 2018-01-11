@@ -21,6 +21,7 @@ set(HEADERS
     src/media.hpp
     src/pbus.hpp
     src/ports.hpp
+    src/trigger.hpp
 )
 
 set(SOURCES
