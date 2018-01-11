@@ -10,6 +10,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #include "src/media.hpp"
+#include "src/trigger.hpp"
 #include "ui_reg.h"
 
 #include <QWidget>
@@ -29,6 +30,7 @@ public:
 
     ////////////////////
     void set(const src::media&);
+    void exec(src::trigger);
 
 signals:
     ////////////////////

@@ -75,4 +75,17 @@ void reg::set(const src::media& media)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+void reg::exec(src::trigger trig)
+{
+    using src::trigger;
+    switch(trig)
+    {
+    case trigger::play:   ui_.play->click(); break;
+    case trigger::pause:  ui_.pause->setChecked(false); ui_.pause->click(); break;
+    case trigger::resume: ui_.pause->setChecked(true); ui_.pause->click(); break;
+    case trigger::stop:   ui_.stop->click(); break;
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 }
