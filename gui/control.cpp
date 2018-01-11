@@ -43,4 +43,12 @@ void control::scanned(const src::media& media)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+void control::exec(int n, src::trigger trig)
+{
+    auto reges = ui_.reges->layout();
+    if(n >= 0 && n < reges->count())
+        static_cast<reg*>(reges->itemAt(n)->widget())->exec(trig);
+}
+
+////////////////////////////////////////////////////////////////////////////////
 }
