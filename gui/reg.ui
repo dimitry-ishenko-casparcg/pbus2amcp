@@ -75,6 +75,12 @@
       <iconset resource="../res/icons.qrc">
        <normaloff>:/fade_in.png</normaloff>:/fade_in.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
      <property name="checkable">
       <bool>true</bool>
      </property>
@@ -92,6 +98,12 @@
       <iconset resource="../res/icons.qrc">
        <normaloff>:/fade_out.png</normaloff>:/fade_out.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
      <property name="checkable">
       <bool>true</bool>
      </property>
@@ -108,6 +120,12 @@
      <property name="icon">
       <iconset resource="../res/icons.qrc">
        <normaloff>:/loop.png</normaloff>:/loop.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
      </property>
      <property name="checkable">
       <bool>true</bool>
