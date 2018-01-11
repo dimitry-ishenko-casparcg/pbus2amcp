@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>PBus to AMCP</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../res/icons.qrc">
+    <normaloff>:/babelfish.png</normaloff>:/babelfish.png</iconset>
+  </property>
   <layout class="QVBoxLayout" name="layout">
    <item>
     <widget class="QSplitter" name="splitter">
@@ -55,6 +59,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../res/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

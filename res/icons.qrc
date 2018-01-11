@@ -6,5 +6,6 @@
         <file>stop.png</file>
         <file>fade_in.png</file>
         <file>fade_out.png</file>
+        <file>babelfish.png</file>
     </qresource>
 </RCC>
