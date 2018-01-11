@@ -11,6 +11,7 @@ find_package(Qt5 COMPONENTS Core Network Gui Widgets SerialPort REQUIRED)
 
 set(HEADERS
     gui/casparcg.hpp
+    gui/clear.hpp
     gui/console.hpp
     gui/control.hpp
     gui/pbus.hpp
@@ -26,6 +27,7 @@ set(HEADERS
 
 set(SOURCES
     gui/casparcg.cpp
+    gui/clear.cpp
     gui/console.cpp
     gui/control.cpp
     gui/pbus.cpp
@@ -40,6 +42,7 @@ set(SOURCES
 
 set(FORMS
     gui/casparcg.ui
+    gui/clear.ui
     gui/console.ui
     gui/control.ui
     gui/pbus.ui
