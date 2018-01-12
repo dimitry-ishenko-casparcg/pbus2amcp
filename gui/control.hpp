@@ -40,6 +40,8 @@ signals:
     void resume(int n);
     void   stop(int n, bool fade_out);
 
+    void clear();
+
 private:
     ////////////////////
     Ui::control ui_;

@@ -5,6 +5,7 @@
 // Distributed under the GNU GPL license. See the LICENSE.md file for details.
 
 ////////////////////////////////////////////////////////////////////////////////
+#include "clear.hpp"
 #include "control.hpp"
 #include "reg.hpp"
 
@@ -18,15 +19,19 @@ control::control(QWidget* parent) : QWidget(parent)
     ui_.setupUi(this);
     closed();
 
-    for(int n = 0; n < 100; ++n)
-    {
-        auto widget = new reg(n);
-        ui_.reges->layout()->addWidget(widget);
+    auto clear = new gui::clear();
+    ui_.reges->layout()->addWidget(clear);
+    connect(clear, &gui::clear::play, this, &control::clear);
 
-        connect(widget, &reg::play  , this, &control::play  );
-        connect(widget, &reg::pause , this, &control::pause );
-        connect(widget, &reg::resume, this, &control::resume);
-        connect(widget, &reg::stop  , this, &control::stop  );
+    for(int n = 1; n <= 100; ++n)
+    {
+        auto reg = new gui::reg(n);
+        ui_.reges->layout()->addWidget(reg);
+
+        connect(reg, &gui::reg::play  , this, &control::play  );
+        connect(reg, &gui::reg::pause , this, &control::pause );
+        connect(reg, &gui::reg::resume, this, &control::resume);
+        connect(reg, &gui::reg::stop  , this, &control::stop  );
     }
 }
 
@@ -38,16 +43,27 @@ void control::closed() { ui_.reges->setEnabled(false); }
 void control::scanned(const src::media& media)
 {
     auto reges = ui_.reges->layout();
-    for(int n = 0; n < reges->count(); ++n)
-        static_cast<reg*>(reges->itemAt(n)->widget())->set(media);
+    for(int n = 1; n < reges->count(); ++n)
+    {
+        auto reg = qobject_cast<gui::reg*>(reges->itemAt(n)->widget());
+        if(reg) reg->set(media);
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void control::exec(int n, src::trigger trig)
 {
     auto reges = ui_.reges->layout();
-    if(n >= 0 && n < reges->count())
-        static_cast<reg*>(reges->itemAt(n)->widget())->exec(trig);
+    if(n == 0)
+    {
+        auto clear = qobject_cast<gui::clear*>(reges->itemAt(n)->widget());
+        if(clear) clear->exec(trig);
+    }
+    else if(n > 0 && n < reges->count())
+    {
+        auto reg = qobject_cast<gui::reg*>(reges->itemAt(n)->widget());
+        if(reg) reg->exec(trig);
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
