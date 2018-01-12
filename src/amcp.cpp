@@ -33,20 +33,18 @@ amcp::amcp(QAbstractSocket& socket, const QByteArray& cmd, QObject* parent) :
 ////////////////////////////////////////////////////////////////////////////////
 void amcp::read()
 {
-    for(;;)
+    store_.append(socket_.readAll());
+
+    for(auto p = store_.indexOf("\r\n"); p >= 0; p = store_.indexOf("\r\n"))
     {
-        auto read = socket_.readLine();
-        if(!read.size()) break;
+        auto cmd = store_.mid(0, p);
+        store_.remove(0, p + 2);
 
-        store_ += std::move(read);
-        if(!store_.endsWith("\r\n")) continue;
-
-        store_.chop(2);
         switch(state_)
         {
         case state::none:
             {
-                auto code = store_.mid(0, store_.indexOf(' '));
+                auto code = cmd.mid(0, cmd.indexOf(' '));
 
                      if(code == "200") state_ = state::data;
                 else if(code == "201") state_ = state::data_one;
@@ -60,29 +58,21 @@ void amcp::read()
                 else if(code == "501") emit_fail("Internal server error");
                 else if(code == "502") emit_fail("Media file unreadable");
                 else if(code == "503") emit_fail("Access error");
-                else emit_fail("Invalid response: " + store_);
-
-                store_.clear();
+                else emit_fail("Invalid response: " + cmd);
             }
             break;
 
         case state::data_one:
-            data_ << store_;
-            store_.clear();
+            data_ << cmd;
             emit_done();
             break;
 
         case state::data:
-            if(store_.size())
-            {
-                data_ << store_;
-                store_.clear();
-            }
-            else emit_done();
+            if(cmd.size()) data_ << cmd; else emit_done();
             break;
 
         case state::error_one:
-            emit_fail("Invalid command: " + store_);
+            emit_fail("Invalid command: " + cmd);
             break;
 
         case state::done:
