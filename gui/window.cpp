@@ -15,7 +15,7 @@ namespace gui
 {
 
 ////////////////////////////////////////////////////////////////////////////////
-window::window(QWidget* parent) : QWidget(parent)
+window::window(QWidget* parent) : QMainWindow(parent)
 {
     ui_.setupUi(this);
 

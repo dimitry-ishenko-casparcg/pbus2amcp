@@ -17,15 +17,15 @@
 #include "src/pbus.hpp"
 #include "ui_window.h"
 
+#include <QMainWindow>
 #include <QScopedPointer>
-#include <QWidget>
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace gui
 {
 
 ////////////////////////////////////////////////////////////////////////////////
-class window : public QWidget
+class window : public QMainWindow
 {
     Q_OBJECT
 
