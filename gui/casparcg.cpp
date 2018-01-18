@@ -15,7 +15,9 @@ namespace gui
 casparcg::casparcg(QWidget* parent) : QWidget(parent)
 {
     ui_.setupUi(this);
+
     update();
+    reset();
 
     connect(ui_.open, &QPushButton::clicked, [&]()
     {
@@ -29,6 +31,15 @@ casparcg::casparcg(QWidget* parent) : QWidget(parent)
         scanning(true);
         emit scan();
     });
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void casparcg::reset()
+{
+    emit close();
+    ui_.name->setText("localhost");
+    ui_.port->setValue(5250);
+    ui_.chan->setValue(1);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
