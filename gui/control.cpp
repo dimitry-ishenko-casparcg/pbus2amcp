@@ -17,7 +17,9 @@ namespace gui
 control::control(QWidget* parent) : QWidget(parent)
 {
     ui_.setupUi(this);
+
     update();
+    reset();
 
     auto clear = new gui::clear();
     ui_.reges->layout()->addWidget(clear);
@@ -32,6 +34,17 @@ control::control(QWidget* parent) : QWidget(parent)
         connect(reg, &gui::reg::pause , this, &control::pause );
         connect(reg, &gui::reg::resume, this, &control::resume);
         connect(reg, &gui::reg::stop  , this, &control::stop  );
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void control::reset()
+{
+    auto reges = ui_.reges->layout();
+    for(int n = 1; n < reges->count(); ++n)
+    {
+        auto reg = qobject_cast<gui::reg*>(reges->itemAt(n)->widget());
+        if(reg) reg->reset();
     }
 }
 
