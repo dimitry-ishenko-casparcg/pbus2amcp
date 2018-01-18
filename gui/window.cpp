@@ -19,6 +19,12 @@ window::window(QWidget* parent) : QMainWindow(parent)
 {
     ui_.setupUi(this);
 
+    connect(ui_.reset,   &QAction::triggered, this, &window::reset);
+    connect(ui_.open,    &QAction::triggered, this, &window::open);
+    connect(ui_.save,    &QAction::triggered, this, &window::save);
+    connect(ui_.save_as, &QAction::triggered, this, &window::save_as);
+    connect(ui_.exit,    &QAction::triggered, this, &window::close);
+
     ui_.top->layout()->addWidget(pbus_ = new gui::pbus(src::avail_ports()));
     connect(pbus_, &gui::pbus::open, this, &window::open_device);
     connect(pbus_, &gui::pbus::close, [&](){ device_.reset(); });
@@ -37,6 +43,32 @@ void window::closeEvent(QCloseEvent* event)
 {
     emit closing();
     QWidget::closeEvent(event);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void window::reset()
+{
+    pbus_->reset();
+    casparcg_->reset();
+    control_->reset();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void window::open()
+{
+
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void window::save()
+{
+
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void window::save_as()
+{
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////

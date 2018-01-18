@@ -45,6 +45,11 @@ private:
     ////////////////////
     Ui::window ui_;
 
+    void reset();
+    void open();
+    void save();
+    void save_as();
+
     gui::pbus* pbus_;
     QScopedPointer<src::pbus> device_;
 
