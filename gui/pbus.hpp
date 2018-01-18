@@ -43,7 +43,10 @@ private:
     Ui::pbus ui_;
 
     enum class state { closed, opening, opened };
+    state state_ = state::closed;
     void set(state);
+
+    void update();
 };
 
 ////////////////////////////////////////////////////////////////////////////////

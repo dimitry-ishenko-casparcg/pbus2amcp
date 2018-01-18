@@ -17,7 +17,7 @@ pbus::pbus(const src::ports& ports, QWidget* parent) : QWidget(parent)
     ui_.setupUi(this);
     for(auto const& port : ports) ui_.port->addItem(port);
 
-    set(state::closed);
+    update();
     reset();
 
     connect(ui_.open, &QPushButton::clicked, [&]()
@@ -39,7 +39,17 @@ void pbus::reset()
 ////////////////////////////////////////////////////////////////////////////////
 void pbus::set(state new_state)
 {
-    switch(new_state)
+    if(new_state != state_)
+    {
+        state_ = new_state;
+        update();
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void pbus::update()
+{
+    switch(state_)
     {
     case state::closed:
         ui_.port->setEnabled(true);
