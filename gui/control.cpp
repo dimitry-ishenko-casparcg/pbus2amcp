@@ -17,7 +17,7 @@ namespace gui
 control::control(QWidget* parent) : QWidget(parent)
 {
     ui_.setupUi(this);
-    closed();
+    update();
 
     auto clear = new gui::clear();
     ui_.reges->layout()->addWidget(clear);
@@ -36,8 +36,29 @@ control::control(QWidget* parent) : QWidget(parent)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void control::opened() { ui_.reges->setEnabled(true); }
-void control::closed() { ui_.reges->setEnabled(false); }
+void control::set(state new_state)
+{
+    if(new_state != state_)
+    {
+        state_ = new_state;
+        update();
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void control::update()
+{
+    switch(state_)
+    {
+    case state::closed:
+        ui_.reges->setEnabled(false);
+        break;
+
+    case state::opened:
+        ui_.reges->setEnabled(true);
+        break;
+    }
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 void control::scanned(const src::media& media)

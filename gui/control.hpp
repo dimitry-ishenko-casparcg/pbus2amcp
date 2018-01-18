@@ -27,8 +27,8 @@ public:
     explicit control(QWidget* parent = nullptr);
 
     ////////////////////
-    void opened();
-    void closed();
+    void opened() { set(state::opened); }
+    void closed() { set(state::closed); }
 
     void scanned(const src::media&);
     void exec(int n, src::trigger);
@@ -45,6 +45,12 @@ signals:
 private:
     ////////////////////
     Ui::control ui_;
+
+    enum class state { closed, opened };
+    state state_ = state::closed;
+    void set(state);
+
+    void update();
 };
 
 ////////////////////////////////////////////////////////////////////////////////
