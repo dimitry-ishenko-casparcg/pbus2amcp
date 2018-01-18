@@ -18,6 +18,7 @@ pbus::pbus(const src::ports& ports, QWidget* parent) : QWidget(parent)
     for(auto const& port : ports) ui_.port->addItem(port);
 
     set(state::closed);
+    reset();
 
     connect(ui_.open, &QPushButton::clicked, [&]()
     {
@@ -25,6 +26,14 @@ pbus::pbus(const src::ports& ports, QWidget* parent) : QWidget(parent)
         emit open(ui_.port->currentText(), ui_.device->value());
     });
     connect(ui_.close, &QPushButton::clicked, this, &pbus::close);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void pbus::reset()
+{
+    emit close();
+    ui_.port->setCurrentIndex(0);
+    ui_.device->setValue(0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

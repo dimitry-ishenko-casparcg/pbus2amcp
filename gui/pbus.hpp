@@ -28,6 +28,8 @@ public:
     explicit pbus(const src::ports&, QWidget* parent = nullptr);
 
     ////////////////////
+    void reset();
+
     void opened() { set(state::opened); }
     void closed() { set(state::closed); }
 
