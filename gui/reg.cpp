@@ -16,13 +16,14 @@ namespace gui
 reg::reg(int n, QWidget* parent) : QWidget(parent), nr_(n)
 {
     ui_.setupUi(this);
-    ui_.nr->setText(QString::number(nr_));
 
+    ui_.nr->setText(QString::number(nr_));
     if(nr_ >= 0 && nr_ <= 9)
     {
         ui_.nr->setBuddy(ui_.path);
         ui_.nr->setText("&" + ui_.nr->text());
     }
+    reset();
 
     connect(ui_.play, &QToolButton::clicked, [&]()
     {
@@ -48,6 +49,19 @@ reg::reg(int n, QWidget* parent) : QWidget(parent), nr_(n)
         emit stop(nr_, ui_.fade_out->isChecked());
         ui_.pause->setChecked(false);
     });
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void reg::reset()
+{
+    ui_.path->clear();
+    ui_.path->clearEditText();
+    ui_.from->setValue(0);
+    ui_.to->setValue(0);
+    ui_.fade_in->setChecked(true);
+    ui_.fade_out->setChecked(true);
+    ui_.loop->setChecked(false);
+    ui_.pause->setChecked(false);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

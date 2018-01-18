@@ -29,6 +29,7 @@ public:
     explicit reg(int n, QWidget* parent = nullptr);
 
     ////////////////////
+    void reset();
     void set(const src::media&);
     void exec(src::trigger);
 
