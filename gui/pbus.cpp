@@ -12,9 +12,11 @@ namespace gui
 {
 
 ////////////////////////////////////////////////////////////////////////////////
-pbus::pbus(QWidget* parent) : QWidget(parent)
+pbus::pbus(const src::ports& ports, QWidget* parent) : QWidget(parent)
 {
     ui_.setupUi(this);
+    for(auto const& port : ports) ui_.port->addItem(port);
+
     set(state::closed);
 
     connect(ui_.open, &QPushButton::clicked, [&]()
@@ -23,13 +25,6 @@ pbus::pbus(QWidget* parent) : QWidget(parent)
         emit open(ui_.port->currentText(), ui_.device->value());
     });
     connect(ui_.close, &QPushButton::clicked, this, &pbus::close);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-void pbus::set(const src::ports& ports)
-{
-    ui_.port->clear();
-    for(auto const& port : ports) ui_.port->addItem(port);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -19,8 +19,7 @@ window::window(QWidget* parent) : QMainWindow(parent)
 {
     ui_.setupUi(this);
 
-    ui_.top->layout()->addWidget(pbus_ = new gui::pbus);
-    pbus_->set(src::avail_ports());
+    ui_.top->layout()->addWidget(pbus_ = new gui::pbus(src::avail_ports()));
     connect(pbus_, &gui::pbus::open, this, &window::open_device);
     connect(pbus_, &gui::pbus::close, [&](){ device_.reset(); });
 

@@ -25,11 +25,9 @@ class pbus : public QWidget
 
 public:
     ////////////////////
-    explicit pbus(QWidget* parent = nullptr);
+    explicit pbus(const src::ports&, QWidget* parent = nullptr);
 
     ////////////////////
-    void set(const src::ports&);
-
     void opened() { set(state::opened); }
     void closed() { set(state::closed); }
 
