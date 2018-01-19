@@ -43,6 +43,16 @@ void casparcg::reset()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+void casparcg::write(QXmlStreamWriter& writer)
+{
+    writer.writeStartElement("casparcg");
+    writer.writeTextElement("hostname", ui_.name->text());
+    writer.writeTextElement("port", QString::number(ui_.port->value()));
+    writer.writeTextElement("channel", QString::number(ui_.chan->value()));
+    writer.writeEndElement();
+}
+
+////////////////////////////////////////////////////////////////////////////////
 void casparcg::set(state new_state)
 {
     if(new_state != state_)
