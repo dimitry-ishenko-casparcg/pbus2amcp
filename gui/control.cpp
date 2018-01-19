@@ -49,6 +49,23 @@ void control::reset()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+void control::read(const QDomElement& parent)
+{
+    auto nodes = parent.elementsByTagName("registers");
+    if(nodes.size())
+    {
+        auto node = nodes.item(0).toElement();
+
+        auto reges = ui_.reges->layout();
+        for(int n = 1; n < reges->count(); ++n)
+        {
+            auto reg = qobject_cast<gui::reg*>(reges->itemAt(n)->widget());
+            if(reg) reg->read(node);
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 void control::write(QXmlStreamWriter& writer)
 {
     writer.writeStartElement("registers");

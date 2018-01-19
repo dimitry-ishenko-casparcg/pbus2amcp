@@ -13,6 +13,7 @@
 #include "src/trigger.hpp"
 #include "ui_control.h"
 
+#include <QtXml/QDomElement>
 #include <QXmlStreamWriter>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -30,6 +31,7 @@ public:
 
     ////////////////////
     void reset();
+    void read(const QDomElement&);
     void write(QXmlStreamWriter&);
 
     void opened() { set(state::opened); }
