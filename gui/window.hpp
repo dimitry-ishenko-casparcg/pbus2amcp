@@ -17,8 +17,10 @@
 #include "src/pbus.hpp"
 #include "ui_window.h"
 
+#include <QFileDialog>
 #include <QMainWindow>
 #include <QScopedPointer>
+#include <QString>
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace gui
@@ -45,10 +47,14 @@ private:
     ////////////////////
     Ui::window ui_;
 
+    QFileDialog dialog_;
+    QString path_;
+
     void reset();
     void open();
     void save();
     void save_as();
+    void write();
 
     gui::pbus* pbus_;
     QScopedPointer<src::pbus> device_;

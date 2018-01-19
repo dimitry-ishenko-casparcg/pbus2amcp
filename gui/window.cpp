@@ -9,6 +9,9 @@
 #include "window.hpp"
 
 #include <QCloseEvent>
+#include <QFile>
+#include <QMessageBox>
+#include <QXmlStreamWriter>
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace gui
@@ -18,6 +21,7 @@ namespace gui
 window::window(QWidget* parent) : QMainWindow(parent)
 {
     ui_.setupUi(this);
+    dialog_.setNameFilter("XML files (*.xml);; All files (*)");
 
     connect(ui_.reset,   &QAction::triggered, this, &window::reset);
     connect(ui_.open,    &QAction::triggered, this, &window::open);
@@ -51,6 +55,8 @@ void window::reset()
     pbus_->reset();
     casparcg_->reset();
     control_->reset();
+
+    path_.clear();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -62,13 +68,50 @@ void window::open()
 ////////////////////////////////////////////////////////////////////////////////
 void window::save()
 {
-
+    if(path_.size()) write(); else save_as();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void window::save_as()
 {
+    dialog_.setAcceptMode(QFileDialog::AcceptSave);
+    if(dialog_.exec() == QDialog::Accepted)
+    {
+        path_ = dialog_.selectedFiles().front();
+        if(path_.indexOf(".") < 0)
+        {
+            path_ += ".xml";
+            dialog_.selectFile(path_);
+        }
+        write();
+    }
+}
 
+////////////////////////////////////////////////////////////////////////////////
+void window::write()
+{
+    QFile file(path_);
+    if(file.open(QFile::WriteOnly | QFile::Truncate))
+    {
+        QXmlStreamWriter writer(&file);
+        writer.setAutoFormatting(true);
+
+        writer.writeStartDocument();
+        writer.writeStartElement("rundown");
+        writer.writeAttribute("id", "pbus2amcp");
+
+        pbus_->write(writer);
+        casparcg_->write(writer);
+        control_->write(writer);
+
+        writer.writeEndElement();
+        writer.writeEndDocument();
+
+        file.close();
+    }
+
+    if(file.error() != QFile::NoError)
+        QMessageBox::critical(this, "Error", file.errorString());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
