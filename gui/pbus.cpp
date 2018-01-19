@@ -37,6 +37,26 @@ void pbus::reset()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+inline auto to_elem(const QDomNodeList& nodes, int index)
+{ return nodes.item(index).toElement(); }
+
+////////////////////////////////////////////////////////////////////////////////
+void pbus::read(const QDomElement& parent)
+{
+    auto nodes = parent.elementsByTagName("pbus");
+    if(nodes.size())
+    {
+        auto node = to_elem(nodes, 0);
+
+        nodes = node.elementsByTagName("port");
+        if(nodes.size()) ui_.port->setCurrentText(to_elem(nodes, 0).text());
+
+        nodes = node.elementsByTagName("device");
+        if(nodes.size()) ui_.device->setValue(to_elem(nodes, 0).text().toInt());
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 void pbus::write(QXmlStreamWriter& writer)
 {
     writer.writeStartElement("pbus");
