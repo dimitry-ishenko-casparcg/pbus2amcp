@@ -37,6 +37,15 @@ void pbus::reset()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+void pbus::write(QXmlStreamWriter& writer)
+{
+    writer.writeStartElement("pbus");
+    writer.writeTextElement("port", ui_.port->currentText());
+    writer.writeTextElement("device", QString::number(ui_.device->value()));
+    writer.writeEndElement();
+}
+
+////////////////////////////////////////////////////////////////////////////////
 void pbus::set(state new_state)
 {
     if(new_state != state_)

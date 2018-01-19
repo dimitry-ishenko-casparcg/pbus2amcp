@@ -13,6 +13,7 @@
 #include "ui_pbus.h"
 
 #include <QWidget>
+#include <QXmlStreamWriter>
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace gui
@@ -29,6 +30,7 @@ public:
 
     ////////////////////
     void reset();
+    void write(QXmlStreamWriter&);
 
     void opened() { set(state::opened); }
     void closed() { set(state::closed); }
