@@ -13,6 +13,7 @@
 #include "src/trigger.hpp"
 #include "ui_reg.h"
 
+#include <QtXml/QDomElement>
 #include <QWidget>
 #include <QXmlStreamWriter>
 
@@ -31,6 +32,7 @@ public:
 
     ////////////////////
     void reset();
+    void read(const QDomElement&);
     void write(QXmlStreamWriter&);
 
     void set(const src::media&);

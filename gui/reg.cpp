@@ -65,6 +65,38 @@ void reg::reset()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+inline auto to_elem(const QDomNodeList& nodes, int index)
+{ return nodes.item(index).toElement(); }
+
+////////////////////////////////////////////////////////////////////////////////
+void reg::read(const QDomElement& parent)
+{
+    auto nodes = parent.elementsByTagName("register");
+    for(int n = 0; n < nodes.size(); ++n)
+    {
+        auto node = nodes.item(n).toElement();
+        if(nr_ == node.attribute("nr").toInt())
+        {
+            auto nodes = node.elementsByTagName("path");
+            if(nodes.size()) ui_.path->setCurrentText(to_elem(nodes, 0).text());
+
+            nodes = node.elementsByTagName("segment");
+            if(nodes.size())
+            {
+                ui_.from->setValue(to_elem(nodes, 0).attribute("from").toInt());
+                ui_.to->setValue(to_elem(nodes, 0).attribute("to").toInt());
+            }
+
+            ui_.fade_in->setChecked(node.elementsByTagName("fade-in").size());
+            ui_.fade_out->setChecked(node.elementsByTagName("fade-out").size());
+            ui_.loop->setChecked(node.elementsByTagName("loop").size());
+
+            break;
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 void reg::write(QXmlStreamWriter& writer)
 {
     if(ui_.path->currentText().size())
