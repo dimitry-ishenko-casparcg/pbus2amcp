@@ -7,7 +7,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-find_package(Qt5 COMPONENTS Core Network Gui Widgets SerialPort REQUIRED)
+find_package(Qt5 COMPONENTS Core Network Gui Widgets SerialPort Xml REQUIRED)
 
 set(HEADERS
     gui/casparcg.hpp
@@ -55,4 +55,4 @@ set(RESOURCES
 )
 
 add_executable(pbus2amcp ${SOURCES} ${FORMS} ${RESOURCES})
-target_link_libraries(pbus2amcp Qt5::Core Qt5::Network Qt5::Gui Qt5::Widgets Qt5::SerialPort)
+target_link_libraries(pbus2amcp Qt5::Core Qt5::Network Qt5::Gui Qt5::Widgets Qt5::SerialPort Qt5::Xml)
