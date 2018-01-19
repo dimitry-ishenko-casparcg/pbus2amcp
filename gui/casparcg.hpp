@@ -11,6 +11,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include "ui_casparcg.h"
 
+#include <QtXml/QDomElement>
 #include <QWidget>
 #include <QXmlStreamWriter>
 
@@ -29,6 +30,7 @@ public:
 
     ////////////////////
     void reset();
+    void read(const QDomElement&);
     void write(QXmlStreamWriter&);
 
     void opened() { set(state::opened); }

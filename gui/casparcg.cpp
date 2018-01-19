@@ -43,6 +43,29 @@ void casparcg::reset()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+inline auto to_elem(const QDomNodeList& nodes, int index)
+{ return nodes.item(index).toElement(); }
+
+////////////////////////////////////////////////////////////////////////////////
+void casparcg::read(const QDomElement& parent)
+{
+    auto nodes = parent.elementsByTagName("casparcg");
+    if(nodes.size())
+    {
+        auto node = to_elem(nodes, 0);
+
+        nodes = node.elementsByTagName("hostname");
+        if(nodes.size()) ui_.name->setText(to_elem(nodes, 0).text());
+
+        nodes = node.elementsByTagName("port");
+        if(nodes.size()) ui_.port->setValue(to_elem(nodes, 0).text().toInt());
+
+        nodes = node.elementsByTagName("channel");
+        if(nodes.size()) ui_.chan->setValue(to_elem(nodes, 0).text().toInt());
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 void casparcg::write(QXmlStreamWriter& writer)
 {
     writer.writeStartElement("casparcg");
