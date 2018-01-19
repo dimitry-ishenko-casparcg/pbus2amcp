@@ -51,13 +51,21 @@ void window::closeEvent(QCloseEvent* event)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+void window::set_path(QString path)
+{
+    path_ = std::move(path);
+    setWindowTitle("PBus to AMCP" + (path_.size() ? " - " + path_ : ""));
+}
+
+////////////////////////////////////////////////////////////////////////////////
 void window::reset()
 {
     pbus_->reset();
     casparcg_->reset();
     control_->reset();
+    set_path("");
 
-    path_.clear();
+    console_->info("New rundown");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -76,6 +84,7 @@ void window::open()
                 pbus_->reset();
                 casparcg_->reset();
                 control_->reset();
+                set_path("");
 
                 auto nodes = doc.elementsByTagName("rundown");
                 if(nodes.size())
@@ -85,7 +94,8 @@ void window::open()
                     casparcg_->read(node);
                     control_->read(node);
 
-                    path_ = file.fileName();
+                    set_path(file.fileName());
+                    console_->info("Opened rundown from " + path_);
                 }
                 else QMessageBox::critical(this, "Error", "Invalid XML file");
             }
@@ -94,7 +104,7 @@ void window::open()
 
         if(file.error() != QFile::NoError)
             QMessageBox::critical(this, "Error", file.errorString());
-        }
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -144,6 +154,7 @@ void window::write()
 
     if(file.error() != QFile::NoError)
         QMessageBox::critical(this, "Error", file.errorString());
+    else console_->info("Saved rundown to " + path_);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

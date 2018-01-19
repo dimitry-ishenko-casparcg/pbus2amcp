@@ -48,7 +48,9 @@ private:
     Ui::window ui_;
 
     QFileDialog dialog_;
+
     QString path_;
+    void set_path(QString);
 
     void reset();
     void open();
