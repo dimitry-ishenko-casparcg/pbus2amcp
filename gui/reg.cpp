@@ -65,6 +65,31 @@ void reg::reset()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+void reg::write(QXmlStreamWriter& writer)
+{
+    if(ui_.path->currentText().size())
+    {
+        writer.writeStartElement("register");
+        auto nr = ui_.nr->text();
+        if(nr.startsWith("&")) nr.remove(0, 1);
+        writer.writeAttribute("nr", nr);
+        writer.writeTextElement("path", ui_.path->currentText());
+        auto from = ui_.from->value(), to = ui_.to->value();
+        if(from || to)
+        {
+            writer.writeStartElement("segment");
+            if(from) writer.writeAttribute("from", QString::number(from));
+            if(to) writer.writeAttribute("to", QString::number(to));
+            writer.writeEndElement();
+        }
+        if(ui_.fade_in->isChecked()) writer.writeEmptyElement("fade-in");
+        if(ui_.fade_out->isChecked()) writer.writeEmptyElement("fade-out");
+        if(ui_.loop->isChecked()) writer.writeEmptyElement("loop");
+        writer.writeEndElement();
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 void reg::set(const src::media& media)
 {
     auto text = ui_.path->currentText();

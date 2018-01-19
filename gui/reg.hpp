@@ -14,6 +14,7 @@
 #include "ui_reg.h"
 
 #include <QWidget>
+#include <QXmlStreamWriter>
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace gui
@@ -30,6 +31,8 @@ public:
 
     ////////////////////
     void reset();
+    void write(QXmlStreamWriter&);
+
     void set(const src::media&);
     void exec(src::trigger);
 
