@@ -49,6 +49,21 @@ void control::reset()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+void control::write(QXmlStreamWriter& writer)
+{
+    writer.writeStartElement("registers");
+
+    auto reges = ui_.reges->layout();
+    for(int n = 1; n < reges->count(); ++n)
+    {
+        auto reg = qobject_cast<gui::reg*>(reges->itemAt(n)->widget());
+        if(reg) reg->write(writer);
+    }
+
+    writer.writeEndElement();
+}
+
+////////////////////////////////////////////////////////////////////////////////
 void control::set(state new_state)
 {
     if(new_state != state_)

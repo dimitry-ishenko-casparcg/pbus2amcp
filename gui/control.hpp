@@ -13,6 +13,8 @@
 #include "src/trigger.hpp"
 #include "ui_control.h"
 
+#include <QXmlStreamWriter>
+
 ////////////////////////////////////////////////////////////////////////////////
 namespace gui
 {
@@ -28,6 +30,7 @@ public:
 
     ////////////////////
     void reset();
+    void write(QXmlStreamWriter&);
 
     void opened() { set(state::opened); }
     void closed() { set(state::closed); }
