@@ -9,6 +9,7 @@
 #include "window.hpp"
 
 #include <QCloseEvent>
+#include <QtXml/QDomDocument>
 #include <QFile>
 #include <QMessageBox>
 #include <QXmlStreamWriter>
@@ -62,7 +63,38 @@ void window::reset()
 ////////////////////////////////////////////////////////////////////////////////
 void window::open()
 {
+    dialog_.setAcceptMode(QFileDialog::AcceptOpen);
+    if(dialog_.exec() == QDialog::Accepted)
+    {
+        QFile file(dialog_.selectedFiles().front());
+        if(file.open(QFile::ReadOnly))
+        {
+            QDomDocument doc;
+            QString err;
+            if(doc.setContent(&file, &err))
+            {
+                pbus_->reset();
+                casparcg_->reset();
+                control_->reset();
 
+                auto nodes = doc.elementsByTagName("rundown");
+                if(nodes.size())
+                {
+                    auto node = nodes.item(0).toElement();
+                    pbus_->read(node);
+                    casparcg_->read(node);
+                    control_->read(node);
+
+                    path_ = file.fileName();
+                }
+                else QMessageBox::critical(this, "Error", "Invalid XML file");
+            }
+            else QMessageBox::critical(this, "Error", err);
+        }
+
+        if(file.error() != QFile::NoError)
+            QMessageBox::critical(this, "Error", file.errorString());
+        }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
