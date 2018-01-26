@@ -42,6 +42,8 @@ public:
 
 signals:
     ////////////////////
+    void changed();
+
     void   play(int n, const QString& path, int from, int to, bool fade_in, bool fade_out, bool loop);
     void  pause(int n);
     void resume(int n);

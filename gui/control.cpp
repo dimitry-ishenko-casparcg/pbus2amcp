@@ -30,10 +30,11 @@ control::control(QWidget* parent) : QWidget(parent)
         auto reg = new gui::reg(n);
         ui_.reges->layout()->addWidget(reg);
 
-        connect(reg, &gui::reg::play  , this, &control::play  );
-        connect(reg, &gui::reg::pause , this, &control::pause );
-        connect(reg, &gui::reg::resume, this, &control::resume);
-        connect(reg, &gui::reg::stop  , this, &control::stop  );
+        connect(reg, &gui::reg::changed, this, &control::changed);
+        connect(reg, &gui::reg::play   , this, &control::play   );
+        connect(reg, &gui::reg::pause  , this, &control::pause  );
+        connect(reg, &gui::reg::resume , this, &control::resume );
+        connect(reg, &gui::reg::stop   , this, &control::stop   );
     }
 }
 
