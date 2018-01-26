@@ -40,6 +40,8 @@ public:
 
 signals:
     ////////////////////
+    void changed();
+
     void open(const QString& name, quint16 port, quint16 chan);
     void close();
 

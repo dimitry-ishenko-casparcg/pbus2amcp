@@ -6,6 +6,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #include "casparcg.hpp"
+#include "macro.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace gui
@@ -19,6 +20,11 @@ casparcg::casparcg(QWidget* parent) : QWidget(parent)
     update();
     reset();
 
+    connect(ui_.name, &QLineEdit::textChanged, this, &casparcg::changed);
+    connect(ui_.port, VOID(QSpinBox, valueChanged, int), this, &casparcg::changed);
+    connect(ui_.chan, VOID(QSpinBox, valueChanged, int), this, &casparcg::changed);
+
+    ////////////////////
     connect(ui_.open, &QPushButton::clicked, [&]()
     {
         set(state::opening);
