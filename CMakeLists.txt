@@ -19,6 +19,7 @@ set(HEADERS
     gui/window.hpp
     src/amcp.hpp
     src/casparcg.hpp
+    src/macro.hpp
     src/media.hpp
     src/pbus.hpp
     src/ports.hpp
