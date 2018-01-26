@@ -31,14 +31,17 @@ window::window(QWidget* parent) : QMainWindow(parent)
     connect(ui_.exit,    &QAction::triggered, this, &window::close);
 
     ui_.top->layout()->addWidget(pbus_ = new gui::pbus(src::avail_ports()));
+    connect(pbus_, &gui::pbus::changed, this, &window::changed);
     connect(pbus_, &gui::pbus::open, this, &window::open_device);
     connect(pbus_, &gui::pbus::close, [&](){ device_.reset(); });
 
     ui_.top->layout()->addWidget(casparcg_ = new gui::casparcg);
+    connect(casparcg_, &gui::casparcg::changed, this, &window::changed);
     connect(casparcg_, &gui::casparcg::open, this, &window::open_server);
     connect(casparcg_, &gui::casparcg::close, [&](){ server_.reset(); });
 
     ui_.top->layout()->addWidget(control_ = new gui::control);
+    connect(control_, &gui::control::changed, this, &window::changed);
 
     ui_.bottom->layout()->addWidget(console_ = new gui::console);
 }
@@ -46,24 +49,45 @@ window::window(QWidget* parent) : QMainWindow(parent)
 ////////////////////////////////////////////////////////////////////////////////
 void window::closeEvent(QCloseEvent* event)
 {
+    if(changed_ && QMessageBox::Yes == QMessageBox::question(
+        this, "Save", "Do you want to save the rundown before exiting?"))
+    save();
+
     emit closing();
     QWidget::closeEvent(event);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void window::set_path(QString path)
+void window::set_title()
 {
-    path_ = std::move(path);
-    setWindowTitle("PBus to AMCP" + (path_.size() ? " - " + path_ : ""));
+    setWindowTitle("PBus to AMCP"
+        + (path_.size() ? " - " + path_ : "")
+        + (changed_ ? " *" : "")
+    );
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void window::changed()
+{
+    if(!ignore_changed_ && !changed_)
+    {
+        changed_ = true;
+        set_title();
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void window::reset()
 {
+    ignore_changed_ = true;
     pbus_->reset();
     casparcg_->reset();
     control_->reset();
-    set_path("");
+    ignore_changed_ = false;
+
+    path_ = "";
+    changed_ = false;
+    set_title();
 
     console_->info("New rundown");
 }
@@ -81,20 +105,23 @@ void window::open()
             QString err;
             if(doc.setContent(&file, &err))
             {
-                pbus_->reset();
-                casparcg_->reset();
-                control_->reset();
-                set_path("");
+                reset();
 
                 auto nodes = doc.elementsByTagName("rundown");
                 if(nodes.size())
                 {
                     auto node = nodes.item(0).toElement();
+
+                    ignore_changed_ = true;
                     pbus_->read(node);
                     casparcg_->read(node);
                     control_->read(node);
+                    ignore_changed_ = false;
 
-                    set_path(file.fileName());
+                    path_ = file.fileName();
+                    changed_ = false;
+                    set_title();
+
                     console_->info("Opened rundown from " + path_);
                 }
                 else QMessageBox::critical(this, "Error", "Invalid XML file");
@@ -152,9 +179,14 @@ void window::write()
         file.close();
     }
 
-    if(file.error() != QFile::NoError)
-        QMessageBox::critical(this, "Error", file.errorString());
-    else console_->info("Saved rundown to " + path_);
+    if(file.error() == QFile::NoError)
+    {
+        changed_ = false;
+        console_->info("Saved rundown to " + path_);
+    }
+    else QMessageBox::critical(this, "Error", file.errorString());
+
+    set_title();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -50,8 +50,12 @@ private:
     QFileDialog dialog_;
 
     QString path_;
-    void set_path(QString);
+    bool changed_ = false;
+    bool ignore_changed_ = false;
 
+    void set_title();
+
+    void changed();
     void reset();
     void open();
     void save();
