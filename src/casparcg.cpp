@@ -106,9 +106,9 @@ void casparcg::scan_done(const QByteArrayList& data)
         if(pos < 0) continue;
 
         auto type = read.mid(0, pos).toLower();
-             if(type == "audio") media << medium { audio, path };
-        else if(type == "movie") media << medium { movie, path };
-        else if(type == "still") media << medium { still, path };
+             if(type == "audio") media.insert(medium { audio, path });
+        else if(type == "movie") media.insert(medium { movie, path });
+        else if(type == "still") media.insert(medium { still, path });
     }
 
     ////////////////////
