@@ -5,7 +5,9 @@
 // Distributed under the GNU GPL license. See the LICENSE.md file for details.
 
 ////////////////////////////////////////////////////////////////////////////////
+#include "macro.hpp"
 #include "reg.hpp"
+
 #include <QColor>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -25,6 +27,14 @@ reg::reg(int n, QWidget* parent) : QWidget(parent), nr_(n)
     }
     reset();
 
+    connect(ui_.path, &QComboBox::currentTextChanged, this, &reg::changed);
+    connect(ui_.from, VOID(QSpinBox, valueChanged, int), this, &reg::changed);
+    connect(ui_.to, VOID(QSpinBox, valueChanged, int), this, &reg::changed);
+    connect(ui_.fade_in, &QToolButton::toggled, this, &reg::changed);
+    connect(ui_.fade_out, &QToolButton::toggled, this, &reg::changed);
+    connect(ui_.loop, &QToolButton::toggled, this, &reg::changed);
+
+    ////////////////////
     connect(ui_.play, &QToolButton::clicked, [&]()
     {
         emit play(nr_,
