@@ -39,6 +39,8 @@ public:
 
 signals:
     ////////////////////
+    void changed();
+
     void open(const QString&, int);
     void close();
 

@@ -5,6 +5,7 @@
 // Distributed under the GNU GPL license. See the LICENSE.md file for details.
 
 ////////////////////////////////////////////////////////////////////////////////
+#include "macro.hpp"
 #include "pbus.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -20,6 +21,10 @@ pbus::pbus(const src::ports& ports, QWidget* parent) : QWidget(parent)
     update();
     reset();
 
+    connect(ui_.port, &QComboBox::currentTextChanged, this, &pbus::changed);
+    connect(ui_.device, VOID(QSpinBox, valueChanged, int), this, &pbus::changed);
+
+    ////////////////////
     connect(ui_.open, &QPushButton::clicked, [&]()
     {
         set(state::opening);
