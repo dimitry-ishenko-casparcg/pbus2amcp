@@ -5,8 +5,8 @@
 // Distributed under the GNU GPL license. See the LICENSE.md file for details.
 
 ////////////////////////////////////////////////////////////////////////////////
-#include "macro.hpp"
 #include "reg.hpp"
+#include "src/macro.hpp"
 
 #include <QColor>
 
