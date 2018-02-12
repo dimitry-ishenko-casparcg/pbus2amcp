@@ -11,8 +11,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include <QByteArray>
 #include <QByteArrayList>
-#include <QList>
-#include <QMetaObject>
 #include <QObject>
 #include <QtNetwork/QAbstractSocket>
 
@@ -37,17 +35,16 @@ signals:
 private:
     ////////////////////
     QAbstractSocket& socket_;
-    QList<QMetaObject::Connection> conn_;
 
-    enum class state { none, data_one, data, error_one, done } state_ = state::none;
+    enum class state { init, read_datum, read_data, fail, done } state_ = state::init;
 
     QByteArray store_;
     QByteArrayList data_;
 
     void read();
 
-    void emit_done();
-    void emit_fail(const QString&);
+    void set_done();
+    void set_fail(const QString&);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
