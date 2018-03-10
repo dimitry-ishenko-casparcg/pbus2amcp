@@ -54,8 +54,8 @@ void casparcg::play(int n, const QString& path, int from, int to, bool fade_in, 
     QByteArray play = "PLAY " + chan(n) + " \"" + path.toLatin1() + "\"";
     if(loop)      play += " LOOP";
     if(fade_in)   play += " MIX 15";
-    if(from > 0)  play += " SEEK " + nr(from);
-    if(to > from) play += " LENGTH " + nr(to - from);
+    play += " IN " + nr(from);
+    if(to >= 0) play += " OUT " + nr(to);
     exec(play);
 
     if(fade_out) exec("LOADBG " + chan(n) + " EMPTY MIX 15 AUTO");
