@@ -67,7 +67,7 @@ void reg::reset()
     ui_.path->clear();
     ui_.path->clearEditText();
     ui_.from->setValue(0);
-    ui_.to->setValue(0);
+    ui_.to->setValue(-1);
     ui_.fade_in->setChecked(true);
     ui_.fade_out->setChecked(true);
     ui_.loop->setChecked(false);
